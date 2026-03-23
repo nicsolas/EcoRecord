@@ -1,89 +1,132 @@
-import { useState, useCallback, useEffect } from 'react';
-import { getRandomItems, TrashItem, CategoryId } from '@/lib/trash-data';
+import { useState, useCallback, useEffect, useRef } from 'react';
+import { shuffleAllItems, TrashItem, CategoryId } from '@/lib/trash-data';
 import { useLocation } from 'wouter';
-import { useGetGameConfig } from '@workspace/api-client-react';
+
+const TOTAL_SECONDS = 30;
+
+export interface GameResult {
+  score: number;
+  correct: number;
+  wrong: number;
+  total: number;
+  timeTaken: number;
+}
 
 export function useGame() {
   const [items, setItems] = useState<TrashItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(10);
+  const [correct, setCorrect] = useState(0);
+  const [wrong, setWrong] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(TOTAL_SECONDS);
   const [gameState, setGameState] = useState<'idle' | 'playing' | 'feedback' | 'finished'>('idle');
-  const [lastFeedback, setLastFeedback] = useState<'correct' | 'wrong' | 'timeout' | null>(null);
-  
+  const [lastFeedback, setLastFeedback] = useState<'correct' | 'wrong' | null>(null);
   const [, setLocation] = useLocation();
-  const { data: config } = useGetGameConfig();
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const startTimeRef = useRef<number>(0);
 
-  const pointsPerAnswer = config?.pointsPerCorrectAnswer || 10;
-  const initialTime = config?.timePerItem || 10;
+  const stopTimer = useCallback(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+  }, []);
+
+  const finishGame = useCallback((finalCorrect: number, finalWrong: number, finalTime: number) => {
+    stopTimer();
+    setGameState('finished');
+    const score = finalCorrect * 10;
+    const timeTaken = TOTAL_SECONDS - finalTime;
+    sessionStorage.setItem('ecosort_last_score', score.toString());
+    sessionStorage.setItem('ecosort_last_correct', finalCorrect.toString());
+    sessionStorage.setItem('ecosort_last_wrong', finalWrong.toString());
+    sessionStorage.setItem('ecosort_last_total', (finalCorrect + finalWrong).toString());
+    sessionStorage.setItem('ecosort_last_time', timeTaken.toString());
+    setTimeout(() => setLocation('/results'), 600);
+  }, [stopTimer, setLocation]);
 
   const startGame = useCallback(() => {
-    setItems(getRandomItems(10));
+    stopTimer();
+    const shuffled = shuffleAllItems();
+    setItems(shuffled);
     setCurrentIndex(0);
-    setScore(0);
-    setTimeLeft(initialTime);
-    setGameState('playing');
+    setCorrect(0);
+    setWrong(0);
+    setTimeLeft(TOTAL_SECONDS);
     setLastFeedback(null);
-  }, [initialTime]);
+    setGameState('playing');
+    startTimeRef.current = Date.now();
+  }, [stopTimer]);
 
-  const handleNext = useCallback(() => {
-    if (currentIndex >= 9) {
-      setGameState('finished');
-      sessionStorage.setItem('ecosort_last_score', score.toString());
-      setTimeout(() => setLocation('/results'), 1000);
-    } else {
-      setCurrentIndex(prev => prev + 1);
-      setTimeLeft(initialTime);
-      setGameState('playing');
-      setLastFeedback(null);
+  // Global countdown timer
+  useEffect(() => {
+    if (gameState !== 'playing') return;
+
+    timerRef.current = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => stopTimer();
+  }, [gameState, stopTimer]);
+
+  // Watch for time running out
+  useEffect(() => {
+    if (gameState === 'playing' && timeLeft === 0) {
+      finishGame(correct, wrong, 0);
     }
-  }, [currentIndex, score, initialTime, setLocation]);
+  }, [timeLeft, gameState, correct, wrong, finishGame]);
 
   const handleSort = useCallback((selectedCategory: CategoryId) => {
     if (gameState !== 'playing') return;
-    
+
     const currentItem = items[currentIndex];
     const isCorrect = currentItem.categoryId === selectedCategory;
-    
+
+    const newCorrect = isCorrect ? correct + 1 : correct;
+    const newWrong = isCorrect ? wrong : wrong + 1;
+
     if (isCorrect) {
-      setScore(prev => prev + pointsPerAnswer);
+      setCorrect(newCorrect);
       setLastFeedback('correct');
     } else {
+      setWrong(newWrong);
       setLastFeedback('wrong');
     }
-    
-    setGameState('feedback');
-    setTimeout(handleNext, 800);
-  }, [gameState, items, currentIndex, pointsPerAnswer, handleNext]);
 
-  // Timer effect
-  useEffect(() => {
-    if (gameState !== 'playing') return;
-    
-    if (timeLeft <= 0) {
-      setLastFeedback('timeout');
-      setGameState('feedback');
-      setTimeout(handleNext, 800);
+    const nextIndex = currentIndex + 1;
+
+    if (nextIndex >= items.length) {
+      // All 100 items sorted
+      finishGame(newCorrect, newWrong, timeLeft);
       return;
     }
 
-    const timer = setInterval(() => {
-      setTimeLeft(prev => prev - 1);
-    }, 1000);
+    setGameState('feedback');
 
-    return () => clearInterval(timer);
-  }, [timeLeft, gameState, handleNext]);
+    setTimeout(() => {
+      setCurrentIndex(nextIndex);
+      setLastFeedback(null);
+      setGameState('playing');
+    }, 300);
+  }, [gameState, items, currentIndex, correct, wrong, timeLeft, finishGame]);
 
   return {
     items,
     currentIndex,
     currentItem: items[currentIndex],
-    score,
+    correct,
+    wrong,
+    score: correct * 10,
     timeLeft,
+    totalTime: TOTAL_SECONDS,
     gameState,
     lastFeedback,
     startGame,
     handleSort,
-    initialTime
+    totalItems: items.length,
   };
 }

@@ -46,7 +46,7 @@ export default function Home() {
               Diventa il <span className="text-primary relative inline-block">Campione<div className="absolute -bottom-2 left-0 w-full h-3 bg-secondary/50 rounded-full -z-10"></div></span> del Riciclo!
             </h1>
             <p className="mt-4 text-lg text-muted-foreground">
-              Smista correttamente i rifiuti nei cassonetti giusti. Hai 10 secondi per oggetto. Accumula punti e scala la classifica globale!
+              Hai <strong>30 secondi</strong> per smistare più oggetti possibili tra i 100 disponibili. Più ne smisti correttamente, più punti guadagni!
             </p>
           </div>
 
