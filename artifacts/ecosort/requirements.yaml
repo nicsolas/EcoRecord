@@ -1,0 +1,20 @@
+packages:
+  "framer-motion": "For playful, bouncy animations of trash items and UI elements"
+  "canvas-confetti": "For celebration effects on the results page"
+  "@types/canvas-confetti": "Types for canvas-confetti"
+  "date-fns": "For reliable countdown timer calculations"
+  "clsx": "Utility for constructing className strings conditionally"
+  "tailwind-merge": "Utility for merging tailwind classes safely"
+
+images:
+  - path: "artifacts/ecosort/public/images/hero-eco.png"
+    description: "A bright, playful, cartoon-style 2D illustration of a sunny green park with stylized recycling bins, fluffy trees, and a clear blue sky. Bright colors, highly stylized, vector art style."
+    aspect_ratio: "16:9"
+  - path: "artifacts/ecosort/public/images/mascot.png"
+    description: "A cute, friendly cartoon Earth globe mascot character smiling and giving a thumbs up. Clean vector art, solid transparent background style, vibrant colors."
+    aspect_ratio: "1:1"
+
+notes:
+  - Using generated Orval hooks from @workspace/api-client-react
+  - Game logic handles 10 items per session, 10 seconds per item
+  - Player identity stored in sessionStorage for simple flow without auth
