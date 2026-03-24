@@ -1,4 +1,4 @@
-export type CategoryId = 'organico' | 'vetro' | 'carta' | 'multimateriale' | 'indifferenziato';
+export type CategoryId = 'organico' | 'vetro' | 'carta' | 'multimateriale' | 'indifferenziato' | 'raee';
 
 export interface TrashItem {
   id: string;
@@ -14,6 +14,7 @@ export const CATEGORIES: Record<CategoryId, { id: CategoryId; name: string; colo
   carta:          { id: 'carta',          name: 'Carta',           color: '#2563eb', binEmoji: '🔵' },
   multimateriale: { id: 'multimateriale', name: 'Multi-materiale', color: '#d97706', binEmoji: '🟡' },
   indifferenziato:{ id: 'indifferenziato',name: 'Indifferenziato', color: '#6b7280', binEmoji: '⚫' },
+  raee:           { id: 'raee',           name: 'RAEE',            color: '#7c3aed', binEmoji: '🔌' },
 };
 
 export const TRASH_ITEMS: TrashItem[] = [
@@ -126,6 +127,28 @@ export const TRASH_ITEMS: TrashItem[] = [
   { id: 'i18', name: 'Calze di nylon rotte',   emoji: '🧦', image: 'torn_stockings.png',      categoryId: 'indifferenziato' },
   { id: 'i19', name: 'Tubetto di colla vuoto', emoji: '🔧', image: 'empty_glue.png',          categoryId: 'indifferenziato' },
   { id: 'i20', name: 'Assorbente igienico',    emoji: '🧷', image: 'adult_diaper.png',        categoryId: 'indifferenziato' },
+
+  // --- RAEE (20) ---
+  { id: 'r1',  name: 'Smartphone rotto',       emoji: '📱', image: 'broken_smartphone.png',   categoryId: 'raee' },
+  { id: 'r2',  name: 'Batteria esaurita',      emoji: '🔋', image: 'dead_battery.png',        categoryId: 'raee' },
+  { id: 'r3',  name: 'Caricabatterie rotto',   emoji: '🔌', image: 'broken_charger.png',      categoryId: 'raee' },
+  { id: 'r4',  name: 'Lampadina LED',          emoji: '💡', image: 'led_bulb.png',            categoryId: 'raee' },
+  { id: 'r5',  name: 'Lampadina fluorescente', emoji: '💡', image: 'fluorescent_bulb.png',    categoryId: 'raee' },
+  { id: 'r6',  name: 'Telecomando rotto',      emoji: '📺', image: 'broken_remote.png',       categoryId: 'raee' },
+  { id: 'r7',  name: 'Cuffie rotte',           emoji: '🎧', image: 'broken_headphones.png',   categoryId: 'raee' },
+  { id: 'r8',  name: 'Tostapane rotto',        emoji: '🍞', image: 'broken_toaster.png',      categoryId: 'raee' },
+  { id: 'r9',  name: 'Ferro da stiro rotto',   emoji: '👔', image: 'broken_iron.png',         categoryId: 'raee' },
+  { id: 'r10', name: 'Calcolatrice rotta',     emoji: '🔢', image: 'broken_calculator.png',   categoryId: 'raee' },
+  { id: 'r11', name: 'Sveglia rotta',          emoji: '⏰', image: 'broken_alarm.png',        categoryId: 'raee' },
+  { id: 'r12', name: 'Tastiera rotta',         emoji: '⌨️', image: 'broken_keyboard.png',     categoryId: 'raee' },
+  { id: 'r13', name: 'Mouse rotto',            emoji: '🖱️', image: 'broken_mouse.png',        categoryId: 'raee' },
+  { id: 'r14', name: 'Tablet rotto',           emoji: '📱', image: 'broken_tablet.png',       categoryId: 'raee' },
+  { id: 'r15', name: 'Cavo USB rotto',         emoji: '🔌', image: 'broken_usb_cable.png',    categoryId: 'raee' },
+  { id: 'r16', name: 'Asciugacapelli rotto',   emoji: '💨', image: 'broken_hairdryer.png',    categoryId: 'raee' },
+  { id: 'r17', name: 'Frullatore rotto',       emoji: '🥤', image: 'broken_blender.png',      categoryId: 'raee' },
+  { id: 'r18', name: 'Pile stilo scariche',     emoji: '🔋', image: 'dead_aa_batteries.png',  categoryId: 'raee' },
+  { id: 'r19', name: 'Disco CD/DVD',           emoji: '💿', image: 'cd_disc.png',             categoryId: 'raee' },
+  { id: 'r20', name: 'Stampante rotta',        emoji: '🖨️', image: 'broken_printer.png',      categoryId: 'raee' },
 ];
 
 export function shuffleAllItems(): TrashItem[] {
