@@ -12,6 +12,7 @@ const BIN_STYLES: Record<CategoryId, { bg: string; border: string; text: string 
   carta:          { bg: 'bg-[#2563eb]', border: 'border-[#1a47b3]', text: 'text-white' },
   multimateriale: { bg: 'bg-[#d97706]', border: 'border-[#b45309]', text: 'text-white' },
   indifferenziato:{ bg: 'bg-[#4b5563]', border: 'border-[#374151]', text: 'text-white' },
+  raee:           { bg: 'bg-[#7c3aed]', border: 'border-[#5b21b6]', text: 'text-white' },
 };
 
 export default function Game() {
@@ -49,6 +50,8 @@ export default function Game() {
   const isUrgent = timeLeft <= 8;
   const sorted = currentIndex;
 
+  const categoryIds = Object.keys(CATEGORIES) as CategoryId[];
+
   return (
     <div className="flex-1 flex flex-col max-w-5xl mx-auto w-full px-4 pt-4 pb-6 gap-4">
 
@@ -76,7 +79,7 @@ export default function Game() {
         {/* Oggetti smistati */}
         <div className="bg-card border border-border rounded-2xl p-3 flex flex-col items-center">
           <span className="text-xs font-bold text-muted-foreground uppercase tracking-wide">Smistati</span>
-          <span className="text-3xl font-black text-foreground">{sorted}<span className="text-base font-normal text-muted-foreground">/100</span></span>
+          <span className="text-3xl font-black text-foreground">{sorted}<span className="text-base font-normal text-muted-foreground">/120</span></span>
         </div>
       </div>
 
@@ -90,7 +93,7 @@ export default function Game() {
       </div>
 
       {/* Item Display */}
-      <div className="flex-1 flex items-center justify-center min-h-[220px]">
+      <div className="flex-1 flex items-center justify-center min-h-[200px]">
         <AnimatePresence mode="popLayout">
           <motion.div
             key={currentItem.id + lastFeedback}
@@ -107,7 +110,7 @@ export default function Game() {
           >
             {/* Item card */}
             <div className={cn(
-              "relative w-44 h-44 md:w-52 md:h-52 rounded-[2.5rem] shadow-2xl border-4 flex items-center justify-center overflow-hidden bg-white",
+              "relative w-40 h-40 md:w-52 md:h-52 rounded-[2.5rem] shadow-2xl border-4 flex items-center justify-center overflow-hidden bg-white",
               lastFeedback === 'correct' ? "border-green-500 shadow-green-300/60" :
               lastFeedback === 'wrong'   ? "border-red-500 shadow-red-300/60" :
               "border-white shadow-black/15"
@@ -152,9 +155,9 @@ export default function Game() {
         </AnimatePresence>
       </div>
 
-      {/* Bins */}
-      <div className="grid grid-cols-5 gap-2 md:gap-3">
-        {(Object.keys(CATEGORIES) as CategoryId[]).map((catId) => {
+      {/* Bins — mobile: 3+3, desktop: tutti in riga */}
+      <div className="grid grid-cols-3 md:grid-cols-6 gap-2 md:gap-3">
+        {categoryIds.map((catId) => {
           const cat = CATEGORIES[catId];
           const style = BIN_STYLES[catId];
           return (
@@ -165,15 +168,14 @@ export default function Game() {
               whileTap={{ scale: 0.93 }}
               whileHover={{ scale: 1.04 }}
               className={cn(
-                "flex flex-col items-center justify-end pb-3 pt-2 px-1 rounded-3xl h-28 md:h-36",
+                "flex flex-col items-center justify-end pb-3 pt-2 px-1 rounded-3xl h-24 md:h-36",
                 "border-b-8 transition-all duration-100 cursor-pointer select-none",
                 style.bg, style.border, style.text,
                 gameState !== 'playing' && "opacity-70 pointer-events-none"
               )}
             >
-              {/* Bin icon */}
-              <span className="text-3xl md:text-4xl mb-1">🗑️</span>
-              <span className="font-bold text-[10px] md:text-xs text-center leading-tight uppercase tracking-wide px-1">
+              <span className="text-2xl md:text-4xl mb-1">🗑️</span>
+              <span className="font-bold text-[9px] md:text-xs text-center leading-tight uppercase tracking-wide px-1">
                 {cat.name}
               </span>
             </motion.button>
