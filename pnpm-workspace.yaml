@@ -1,8 +1,9 @@
 packages:
-  - artifacts/*
-  - lib/*
-  - lib/integrations/*
-  - scripts
+  - 'artifacts/api-server'
+  - 'lib/**'
+  - 'scripts'
+  - 'src'
+  - '!artifacts/ecosort'
 
 autoInstallPeers: false
 

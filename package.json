@@ -14,6 +14,10 @@
     "typescript": "~5.9.2"
   },
   "dependencies": {
-    "@supabase/supabase-js": "2.103.1"
+    "@esbuild/win32-x64": "^0.27.3",
+    "@rollup/rollup-win32-x64-msvc": "^4.60.2",
+    "@supabase/supabase-js": "2.103.1",
+    "esbuild": "0.27.3",
+    "lightningcss": "^1.30.2"
   }
 }
