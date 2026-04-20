@@ -33,8 +33,8 @@ export default function Game() {
   } = useGame();
 
   useEffect(() => {
-    const fName = sessionStorage.getItem('ecosort_firstName');
-    if (!fName) { setLocation('/'); return; }
+    const username = sessionStorage.getItem('ecosort_username');
+    if (!username) { setLocation('/'); return; }
     startGame();
   }, [startGame, setLocation]);
 

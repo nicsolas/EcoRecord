@@ -11,5 +11,5 @@ export * from "./gameConfig";
 export * from "./getLeaderboardParams";
 export * from "./getPlayerScoreParams";
 export * from "./healthStatus";
-export * from "./score";
+export * from "./scoreWithUser";
 export * from "./submitScoreRequest";

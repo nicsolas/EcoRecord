@@ -1,15 +1,16 @@
 import { Router, type IRouter } from "express";
-import { db, scoresTable } from "@workspace/db";
-import { eq, and, desc, sql } from "drizzle-orm";
+import { db, usersTable, gamesTable, scoresTable } from "@workspace/db";
+import { eq, desc, sql } from "drizzle-orm";
 
 const router: IRouter = Router();
 
-function isValidSubmitBody(body: unknown): body is { firstName: string; lastName: string; score: number } {
+function isValidSubmitBody(body: unknown): body is { username: string; email: string; gameName: string; score: number } {
   if (!body || typeof body !== "object") return false;
   const b = body as Record<string, unknown>;
   return (
-    typeof b.firstName === "string" && b.firstName.length > 0 &&
-    typeof b.lastName === "string" && b.lastName.length > 0 &&
+    typeof b.username === "string" && b.username.length > 0 &&
+    typeof b.email === "string" && b.email.length > 0 &&
+    typeof b.gameName === "string" && b.gameName.length > 0 &&
     typeof b.score === "number" && Number.isInteger(b.score) && b.score >= 0
   );
 }
@@ -17,10 +18,21 @@ function isValidSubmitBody(body: unknown): body is { firstName: string; lastName
 router.get("/scores", async (req, res) => {
   const limit = Math.min(Number(req.query.limit) || 20, 100);
 
+  // Group by user and game to get max score
   const rows = await db
-    .select()
+    .select({
+      id: usersTable.id,
+      score: sql<number>`MAX(${scoresTable.score})`,
+      username: usersTable.username,
+      email: usersTable.email,
+      gameName: gamesTable.name,
+      createdAt: sql<string>`MAX(${scoresTable.createdAt})`,
+    })
     .from(scoresTable)
-    .orderBy(desc(scoresTable.bestScore))
+    .innerJoin(usersTable, eq(scoresTable.userId, usersTable.id))
+    .innerJoin(gamesTable, eq(scoresTable.gameId, gamesTable.id))
+    .groupBy(usersTable.id, usersTable.username, usersTable.email, gamesTable.id, gamesTable.name)
+    .orderBy(desc(sql`MAX(${scoresTable.score})`))
     .limit(limit);
 
   const withRank = rows.map((row, index) => ({
@@ -32,23 +44,28 @@ router.get("/scores", async (req, res) => {
 });
 
 router.get("/scores/player", async (req, res) => {
-  const firstName = String(req.query.firstName || "");
-  const lastName = String(req.query.lastName || "");
+  const email = String(req.query.email || "");
 
-  if (!firstName || !lastName) {
-    res.status(400).json({ error: "firstName and lastName are required" });
+  if (!email) {
+    res.status(400).json({ error: "email is required" });
     return;
   }
 
+  // Find the highest score for this user
   const rows = await db
-    .select()
+    .select({
+      id: scoresTable.id,
+      score: scoresTable.score,
+      username: usersTable.username,
+      email: usersTable.email,
+      gameName: gamesTable.name,
+      createdAt: scoresTable.createdAt,
+    })
     .from(scoresTable)
-    .where(
-      and(
-        eq(sql`lower(${scoresTable.firstName})`, firstName.toLowerCase()),
-        eq(sql`lower(${scoresTable.lastName})`, lastName.toLowerCase())
-      )
-    )
+    .innerJoin(usersTable, eq(scoresTable.userId, usersTable.id))
+    .innerJoin(gamesTable, eq(scoresTable.gameId, gamesTable.id))
+    .where(eq(sql`lower(${usersTable.email})`, email.toLowerCase()))
+    .orderBy(desc(scoresTable.score))
     .limit(1);
 
   if (rows.length === 0) {
@@ -56,12 +73,14 @@ router.get("/scores/player", async (req, res) => {
     return;
   }
 
+  // Calculate rank (this is a simplified rank calculation)
   const allRows = await db
-    .select()
+    .select({ score: sql<number>`MAX(${scoresTable.score})` })
     .from(scoresTable)
-    .orderBy(desc(scoresTable.bestScore));
+    .groupBy(scoresTable.userId)
+    .orderBy(desc(sql`MAX(${scoresTable.score})`));
 
-  const rank = allRows.findIndex((r) => r.id === rows[0].id) + 1;
+  const rank = allRows.findIndex((r) => r.score === rows[0].score) + 1;
   res.json({ ...rows[0], rank });
 });
 
@@ -71,60 +90,55 @@ router.post("/scores", async (req, res) => {
     return;
   }
 
-  const { firstName, lastName, score } = req.body;
+  const { username, email, gameName, score } = req.body;
 
-  const existing = await db
-    .select()
-    .from(scoresTable)
-    .where(
-      and(
-        eq(sql`lower(${scoresTable.firstName})`, firstName.toLowerCase()),
-        eq(sql`lower(${scoresTable.lastName})`, lastName.toLowerCase())
-      )
-    )
-    .limit(1);
-
-  let result;
-
-  if (existing.length > 0) {
-    const current = existing[0];
-    const newBest = Math.max(current.bestScore, score);
-    const newTotal = current.totalScore + score;
-    const newGames = current.gamesPlayed + 1;
-
-    const updated = await db
-      .update(scoresTable)
-      .set({
-        totalScore: newTotal,
-        bestScore: newBest,
-        gamesPlayed: newGames,
-        updatedAt: new Date(),
-      })
-      .where(eq(scoresTable.id, current.id))
-      .returning();
-
-    result = updated[0];
+  // Upsert user
+  const users = await db.select().from(usersTable).where(eq(sql`lower(${usersTable.email})`, email.toLowerCase())).limit(1);
+  let userId;
+  if (users.length > 0) {
+    userId = users[0].id;
+    // Update username if changed
+    if (users[0].username !== username) {
+      await db.update(usersTable).set({ username }).where(eq(usersTable.id, userId));
+    }
   } else {
-    const inserted = await db
-      .insert(scoresTable)
-      .values({
-        firstName,
-        lastName,
-        totalScore: score,
-        bestScore: score,
-        gamesPlayed: 1,
-      })
-      .returning();
-
-    result = inserted[0];
+    const inserted = await db.insert(usersTable).values({ username, email }).returning();
+    userId = inserted[0].id;
   }
 
-  const allRows = await db
-    .select()
-    .from(scoresTable)
-    .orderBy(desc(scoresTable.bestScore));
+  // Upsert game
+  const games = await db.select().from(gamesTable).where(eq(sql`lower(${gamesTable.name})`, gameName.toLowerCase())).limit(1);
+  let gameId;
+  if (games.length > 0) {
+    gameId = games[0].id;
+  } else {
+    const inserted = await db.insert(gamesTable).values({ name: gameName }).returning();
+    gameId = inserted[0].id;
+  }
 
-  const rank = allRows.findIndex((r) => r.id === result.id) + 1;
+  // Insert score
+  const insertedScore = await db.insert(scoresTable).values({
+    userId,
+    gameId,
+    score,
+  }).returning();
+
+  const result = {
+    id: insertedScore[0].id,
+    score: insertedScore[0].score,
+    username,
+    email,
+    gameName,
+    createdAt: insertedScore[0].createdAt,
+  };
+
+  const allRows = await db
+    .select({ score: sql<number>`MAX(${scoresTable.score})` })
+    .from(scoresTable)
+    .groupBy(scoresTable.userId)
+    .orderBy(desc(sql`MAX(${scoresTable.score})`));
+
+  const rank = allRows.findIndex((r) => r.score === result.score) + 1;
   res.json({ ...result, rank });
 });
 

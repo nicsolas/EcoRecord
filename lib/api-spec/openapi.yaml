@@ -49,12 +49,12 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Score"
+                  $ref: "#/components/schemas/ScoreWithUser"
     post:
       operationId: submitScore
       tags: [scores]
       summary: Submit a score
-      description: Submit or update a player's score
+      description: Submit a new score (creates user/game if needed)
       requestBody:
         required: true
         content:
@@ -67,31 +67,26 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Score"
+                $ref: "#/components/schemas/ScoreWithUser"
 
   /scores/player:
     get:
       operationId: getPlayerScore
       tags: [scores]
-      summary: Get player score by name
+      summary: Get player score by email
       parameters:
-        - name: firstName
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: lastName
+        - name: email
           in: query
           required: true
           schema:
             type: string
       responses:
         "200":
-          description: Player score found
+          description: Player best score found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Score"
+                $ref: "#/components/schemas/ScoreWithUser"
         "404":
           description: Player not found
           content:
@@ -123,47 +118,48 @@ components:
       required:
         - status
 
-    Score:
+    ScoreWithUser:
       type: object
       properties:
         id:
-          type: integer
-        firstName:
           type: string
-        lastName:
+          format: uuid
+        score:
+          type: integer
+        username:
           type: string
-        totalScore:
-          type: integer
-        gamesPlayed:
-          type: integer
-        bestScore:
-          type: integer
+        email:
+          type: string
+        gameName:
+          type: string
         rank:
           type: integer
-        updatedAt:
+        createdAt:
           type: string
           format: date-time
       required:
         - id
-        - firstName
-        - lastName
-        - totalScore
-        - gamesPlayed
-        - bestScore
-        - updatedAt
+        - score
+        - username
+        - email
+        - gameName
+        - createdAt
 
     SubmitScoreRequest:
       type: object
       properties:
-        firstName:
+        username:
           type: string
-        lastName:
+        email:
+          type: string
+        gameName:
           type: string
         score:
           type: integer
       required:
-        - firstName
-        - lastName
+        - username
+        - email
+        - gameName
         - score
 
     GameConfig:
@@ -189,3 +185,4 @@ components:
           type: string
       required:
         - error
+

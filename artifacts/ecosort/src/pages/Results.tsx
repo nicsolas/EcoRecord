@@ -13,8 +13,9 @@ export default function Results() {
   const [correct, setCorrect] = useState(0);
   const [wrong, setWrong] = useState(0);
   const [total, setTotal] = useState(0);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [gameName, setGameName] = useState('');
   const [isSaved, setIsSaved] = useState(false);
 
   const { mutate: submitScore, isPending } = useSubmitScore();
@@ -24,18 +25,20 @@ export default function Results() {
     const c = sessionStorage.getItem('ecosort_last_correct');
     const w = sessionStorage.getItem('ecosort_last_wrong');
     const t = sessionStorage.getItem('ecosort_last_total');
-    const f = sessionStorage.getItem('ecosort_firstName');
-    const l = sessionStorage.getItem('ecosort_lastName');
+    const u = sessionStorage.getItem('ecosort_username');
+    const e = sessionStorage.getItem('ecosort_email');
+    const g = sessionStorage.getItem('ecosort_gameName') || 'EcoSort Challenge';
 
-    if (!s || !f || !l) { setLocation('/'); return; }
+    if (!s || !u || !e) { setLocation('/'); return; }
 
     const sc = parseInt(s, 10);
     setScore(sc);
     setCorrect(parseInt(c || '0', 10));
     setWrong(parseInt(w || '0', 10));
     setTotal(parseInt(t || '0', 10));
-    setFirstName(f);
-    setLastName(l);
+    setUsername(u);
+    setEmail(e);
+    setGameName(g);
 
     if (sc >= 300) {
       const duration = 4000;
@@ -51,7 +54,7 @@ export default function Results() {
 
   const handleSaveScore = () => {
     submitScore(
-      { data: { firstName, lastName, score } },
+      { data: { username, email, gameName, score } },
       {
         onSuccess: () => {
           setIsSaved(true);
@@ -90,7 +93,7 @@ export default function Results() {
         </div>
 
         <h1 className="text-4xl font-display font-bold mb-1">Tempo scaduto!</h1>
-        <p className="text-muted-foreground text-lg mb-6">Ottimo tentativo, {firstName}!</p>
+        <p className="text-muted-foreground text-lg mb-6">Ottimo tentativo, {username}!</p>
 
         {/* Stats grid */}
         <div className="grid grid-cols-3 gap-3 mb-6">

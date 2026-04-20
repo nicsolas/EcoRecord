@@ -22,7 +22,7 @@ import type {
   GetLeaderboardParams,
   GetPlayerScoreParams,
   HealthStatus,
-  Score,
+  ScoreWithUser,
   SubmitScoreRequest,
 } from "./api.schemas";
 
@@ -134,8 +134,8 @@ export const getGetLeaderboardUrl = (params?: GetLeaderboardParams) => {
 export const getLeaderboard = async (
   params?: GetLeaderboardParams,
   options?: RequestInit,
-): Promise<Score[]> => {
-  return customFetch<Score[]>(getGetLeaderboardUrl(params), {
+): Promise<ScoreWithUser[]> => {
+  return customFetch<ScoreWithUser[]>(getGetLeaderboardUrl(params), {
     ...options,
     method: "GET",
   });
@@ -207,7 +207,7 @@ export function useGetLeaderboard<
 }
 
 /**
- * Submit or update a player's score
+ * Submit a new score (creates user/game if needed)
  * @summary Submit a score
  */
 export const getSubmitScoreUrl = () => {
@@ -217,8 +217,8 @@ export const getSubmitScoreUrl = () => {
 export const submitScore = async (
   submitScoreRequest: SubmitScoreRequest,
   options?: RequestInit,
-): Promise<Score> => {
-  return customFetch<Score>(getSubmitScoreUrl(), {
+): Promise<ScoreWithUser> => {
+  return customFetch<ScoreWithUser>(getSubmitScoreUrl(), {
     ...options,
     method: "POST",
     headers: { "Content-Type": "application/json", ...options?.headers },
@@ -294,7 +294,7 @@ export const useSubmitScore = <
 };
 
 /**
- * @summary Get player score by name
+ * @summary Get player score by email
  */
 export const getGetPlayerScoreUrl = (params: GetPlayerScoreParams) => {
   const normalizedParams = new URLSearchParams();
@@ -315,8 +315,8 @@ export const getGetPlayerScoreUrl = (params: GetPlayerScoreParams) => {
 export const getPlayerScore = async (
   params: GetPlayerScoreParams,
   options?: RequestInit,
-): Promise<Score> => {
-  return customFetch<Score>(getGetPlayerScoreUrl(params), {
+): Promise<ScoreWithUser> => {
+  return customFetch<ScoreWithUser>(getGetPlayerScoreUrl(params), {
     ...options,
     method: "GET",
   });
@@ -361,7 +361,7 @@ export type GetPlayerScoreQueryResult = NonNullable<
 export type GetPlayerScoreQueryError = ErrorType<ErrorResponse>;
 
 /**
- * @summary Get player score by name
+ * @summary Get player score by email
  */
 
 export function useGetPlayerScore<

@@ -26,55 +26,52 @@ export const GetLeaderboardQueryParams = zod.object({
 });
 
 export const GetLeaderboardResponseItem = zod.object({
-  id: zod.number(),
-  firstName: zod.string(),
-  lastName: zod.string(),
-  totalScore: zod.number(),
-  gamesPlayed: zod.number(),
-  bestScore: zod.number(),
+  id: zod.string().uuid(),
+  score: zod.number(),
+  username: zod.string(),
+  email: zod.string(),
+  gameName: zod.string(),
   rank: zod.number().optional(),
-  updatedAt: zod.date(),
+  createdAt: zod.date(),
 });
 export const GetLeaderboardResponse = zod.array(GetLeaderboardResponseItem);
 
 /**
- * Submit or update a player's score
+ * Submit a new score (creates user/game if needed)
  * @summary Submit a score
  */
 export const SubmitScoreBody = zod.object({
-  firstName: zod.string(),
-  lastName: zod.string(),
+  username: zod.string(),
+  email: zod.string(),
+  gameName: zod.string(),
   score: zod.number(),
 });
 
 export const SubmitScoreResponse = zod.object({
-  id: zod.number(),
-  firstName: zod.string(),
-  lastName: zod.string(),
-  totalScore: zod.number(),
-  gamesPlayed: zod.number(),
-  bestScore: zod.number(),
+  id: zod.string().uuid(),
+  score: zod.number(),
+  username: zod.string(),
+  email: zod.string(),
+  gameName: zod.string(),
   rank: zod.number().optional(),
-  updatedAt: zod.date(),
+  createdAt: zod.date(),
 });
 
 /**
- * @summary Get player score by name
+ * @summary Get player score by email
  */
 export const GetPlayerScoreQueryParams = zod.object({
-  firstName: zod.coerce.string(),
-  lastName: zod.coerce.string(),
+  email: zod.coerce.string(),
 });
 
 export const GetPlayerScoreResponse = zod.object({
-  id: zod.number(),
-  firstName: zod.string(),
-  lastName: zod.string(),
-  totalScore: zod.number(),
-  gamesPlayed: zod.number(),
-  bestScore: zod.number(),
+  id: zod.string().uuid(),
+  score: zod.number(),
+  username: zod.string(),
+  email: zod.string(),
+  gameName: zod.string(),
   rank: zod.number().optional(),
-  updatedAt: zod.date(),
+  createdAt: zod.date(),
 });
 
 /**

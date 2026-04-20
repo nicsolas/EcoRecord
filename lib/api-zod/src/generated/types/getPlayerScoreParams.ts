@@ -7,6 +7,5 @@
  */
 
 export type GetPlayerScoreParams = {
-  firstName: string;
-  lastName: string;
+  email: string;
 };

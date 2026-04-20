@@ -6,24 +6,25 @@ import { useGetLeaderboard } from '@workspace/api-client-react';
 
 export default function Home() {
   const [, setLocation] = useLocation();
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const { data: leaderboard } = useGetLeaderboard({ limit: 3 });
 
   // Pre-fill if exists
   useEffect(() => {
-    const f = sessionStorage.getItem('ecosort_firstName');
-    const l = sessionStorage.getItem('ecosort_lastName');
-    if (f) setFirstName(f);
-    if (l) setLastName(l);
+    const u = sessionStorage.getItem('ecosort_username');
+    const e = sessionStorage.getItem('ecosort_email');
+    if (u) setUsername(u);
+    if (e) setEmail(e);
   }, []);
 
   const handleStart = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!firstName.trim() || !lastName.trim()) return;
+    if (!username.trim() || !email.trim()) return;
     
-    sessionStorage.setItem('ecosort_firstName', firstName.trim());
-    sessionStorage.setItem('ecosort_lastName', lastName.trim());
+    sessionStorage.setItem('ecosort_username', username.trim());
+    sessionStorage.setItem('ecosort_email', email.trim());
+    sessionStorage.setItem('ecosort_gameName', 'EcoSort Challenge');
     setLocation('/play');
   };
 
@@ -57,23 +58,23 @@ export default function Home() {
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="text-sm font-semibold text-foreground/80">Nome</label>
+                <label className="text-sm font-semibold text-foreground/80">Username</label>
                 <input 
                   type="text" 
-                  value={firstName}
-                  onChange={e => setFirstName(e.target.value)}
-                  placeholder="Mario"
+                  value={username}
+                  onChange={e => setUsername(e.target.value)}
+                  placeholder="EcoGamer"
                   required
                   className="w-full px-4 py-3 rounded-xl bg-background border-2 border-border focus:border-primary focus:ring-4 focus:ring-primary/20 outline-none transition-all"
                 />
               </div>
               <div className="space-y-1.5">
-                <label className="text-sm font-semibold text-foreground/80">Cognome</label>
+                <label className="text-sm font-semibold text-foreground/80">Email</label>
                 <input 
-                  type="text" 
-                  value={lastName}
-                  onChange={e => setLastName(e.target.value)}
-                  placeholder="Rossi"
+                  type="email" 
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder="mario@example.com"
                   required
                   className="w-full px-4 py-3 rounded-xl bg-background border-2 border-border focus:border-primary focus:ring-4 focus:ring-primary/20 outline-none transition-all"
                 />
@@ -126,10 +127,10 @@ export default function Home() {
                         #{i + 1}
                       </span>
                       <span className="font-semibold text-foreground truncate max-w-[150px]">
-                        {player.firstName} {player.lastName}
+                        {player.username}
                       </span>
                     </div>
-                    <span className="font-display font-bold text-primary">{player.bestScore} pt</span>
+                    <span className="font-display font-bold text-primary">{player.score} pt</span>
                   </div>
                 ))}
               </div>

@@ -9,20 +9,20 @@ export interface HealthStatus {
   status: string;
 }
 
-export interface Score {
-  id: number;
-  firstName: string;
-  lastName: string;
-  totalScore: number;
-  gamesPlayed: number;
-  bestScore: number;
+export interface ScoreWithUser {
+  id: string;
+  score: number;
+  username: string;
+  email: string;
+  gameName: string;
   rank?: number;
-  updatedAt: string;
+  createdAt: string;
 }
 
 export interface SubmitScoreRequest {
-  firstName: string;
-  lastName: string;
+  username: string;
+  email: string;
+  gameName: string;
   score: number;
 }
 
@@ -42,6 +42,5 @@ export type GetLeaderboardParams = {
 };
 
 export type GetPlayerScoreParams = {
-  firstName: string;
-  lastName: string;
+  email: string;
 };

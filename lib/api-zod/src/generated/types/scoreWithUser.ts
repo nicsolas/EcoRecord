@@ -6,9 +6,12 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface SubmitScoreRequest {
+export interface ScoreWithUser {
+  id: string;
+  score: number;
   username: string;
   email: string;
   gameName: string;
-  score: number;
+  rank?: number;
+  createdAt: Date;
 }

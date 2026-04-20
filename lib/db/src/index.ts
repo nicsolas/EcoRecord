@@ -1,16 +1,19 @@
-import { drizzle } from "drizzle-orm/node-postgres";
-import pg from "pg";
+import { drizzle } from "drizzle-orm/pglite";
+import { PGlite } from "@electric-sql/pglite";
 import * as schema from "./schema";
+import path from "path";
+import url from "url";
 
-const { Pool } = pg;
+// Get the absolute path to lib/db/pglite-db
+const currentDir = path.dirname(url.fileURLToPath(import.meta.url));
+const isBundled = currentDir.includes("api-server");
+const dbPath = isBundled
+  ? path.resolve(currentDir, "..", "..", "..", "lib", "db", "pglite-db")
+  : path.resolve(currentDir, "..", "pglite-db");
 
-if (!process.env.DATABASE_URL) {
-  throw new Error(
-    "DATABASE_URL must be set. Did you forget to provision a database?",
-  );
-}
+// Store the database locally in a directory
+const client = new PGlite(dbPath);
 
-export const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-export const db = drizzle(pool, { schema });
+export const db = drizzle(client, { schema });
 
 export * from "./schema";

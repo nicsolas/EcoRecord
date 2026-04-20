@@ -51,7 +51,6 @@ export default function Leaderboard() {
                   <th className="p-4 font-bold w-20 text-center">Pos</th>
                   <th className="p-4 font-bold">Cittadino</th>
                   <th className="p-4 font-bold text-center">Miglior Punteggio</th>
-                  <th className="p-4 font-bold text-center hidden sm:table-cell">Partite</th>
                 </tr>
               </thead>
               <tbody>
@@ -71,19 +70,13 @@ export default function Leaderboard() {
                     </td>
                     <td className="p-4">
                       <div className="font-bold text-foreground text-lg">
-                        {score.firstName} {score.lastName}
-                      </div>
-                      <div className="text-xs text-muted-foreground md:hidden mt-1">
-                        Partite giocate: {score.gamesPlayed}
+                        {score.username}
                       </div>
                     </td>
                     <td className="p-4 text-center">
                       <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/10 text-primary font-display font-bold text-xl rounded-full">
-                        {score.bestScore} <Star className="w-4 h-4 fill-current" />
+                        {score.score} <Star className="w-4 h-4 fill-current" />
                       </span>
-                    </td>
-                    <td className="p-4 text-center hidden sm:table-cell text-muted-foreground font-semibold">
-                      {score.gamesPlayed}
                     </td>
                   </motion.tr>
                 ))}
