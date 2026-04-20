@@ -1,0 +1,62 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "B3dxihr7OHqwQtWAkPeB_"
+uri = "file://artifacts/ecosort/public/trash/oil_bottle.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "pRr8D2oDf58q-AMQoQ5Sa"
+uri = "file://artifacts/ecosort/public/trash/sauce_jar.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "TXNZb_GZgsk22d3fo83FW"
+uri = "file://artifacts/ecosort/public/trash/detergent_bottle.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "ja1bhvy4KcRSp_I_g4ps_"
+uri = "file://artifacts/ecosort/public/trash/plastic_fork.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "o4AX6HMQ3qT7P8I113T5n"
+uri = "file://artifacts/ecosort/public/trash/tuna_can.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "fBTCMPoSe7MEJ7GNsSZDg"
+uri = "file://artifacts/ecosort/public/trash/face_mask.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "OnjY0YR946pBfrWh3ZBlc"
+uri = "file://artifacts/ecosort/public/trash/cotton_swab.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "-5GXs6wh6LY1QnBiVlRp4"
+uri = "file://artifacts/ecosort/public/trash/broken_headphones.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "LMHyLQgR7U-vyyP8_n5WK"
+uri = "file://artifacts/ecosort/public/trash/cd_disc.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "Abz31ghjBJlAV4vMi5YbN"
+uri = "file://artifacts/ecosort/public/trash/dead_aa_batteries.png"
+type = "image"
+title = "generated_image"
