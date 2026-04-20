@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "buildCommand": "pnpm --filter @workspace/ecosort run build",
+  "outputDirectory": "artifacts/ecosort/dist/public",
+  "installCommand": "pnpm install --frozen-lockfile",
+  "framework": null,
+  "functions": {
+    "api/index.ts": {
+      "runtime": "@vercel/node@5",
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api/index.ts"
+    },
+    {
+      "source": "/:path*",
+      "destination": "/index.html"
+    }
+  ]
+}

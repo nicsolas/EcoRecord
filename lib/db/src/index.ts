@@ -1,19 +1,47 @@
-import { drizzle } from "drizzle-orm/pglite";
-import { PGlite } from "@electric-sql/pglite";
 import * as schema from "./schema";
-import path from "path";
-import url from "url";
 
-// Get the absolute path to lib/db/pglite-db
-const currentDir = path.dirname(url.fileURLToPath(import.meta.url));
-const isBundled = currentDir.includes("api-server");
-const dbPath = isBundled
-  ? path.resolve(currentDir, "..", "..", "..", "lib", "db", "pglite-db")
-  : path.resolve(currentDir, "..", "pglite-db");
+// Use Neon serverless when DATABASE_URL is available (production/staging),
+// otherwise fall back to local PGlite for offline development.
+async function createDb() {
+  if (process.env.DATABASE_URL) {
+    const { neon } = await import("@neondatabase/serverless");
+    const { drizzle } = await import("drizzle-orm/neon-http");
+    const sql = neon(process.env.DATABASE_URL);
+    return drizzle(sql, { schema });
+  }
 
-// Store the database locally in a directory
-const client = new PGlite(dbPath);
+  // Local dev fallback: PGlite (no DATABASE_URL needed)
+  const path = await import("path");
+  const url = await import("url");
+  const { PGlite } = await import("@electric-sql/pglite");
+  const { drizzle } = await import("drizzle-orm/pglite");
+  const currentDir = path.dirname(url.fileURLToPath(import.meta.url));
+  const isBundled = currentDir.includes("api-server");
+  const dbPath = isBundled
+    ? path.resolve(currentDir, "..", "..", "..", "lib", "db", "pglite-db")
+    : path.resolve(currentDir, "..", "pglite-db");
+  const client = new PGlite(dbPath);
+  return drizzle(client, { schema });
+}
 
-export const db = drizzle(client, { schema });
+// Singleton promise so the DB is only initialised once per process/request
+let _dbPromise: ReturnType<typeof createDb> | null = null;
+
+function getDb() {
+  if (!_dbPromise) _dbPromise = createDb();
+  return _dbPromise;
+}
+
+// Re-export a proxy object so callers can `await db.select(...)` naturally
+export const db = new Proxy({} as Awaited<ReturnType<typeof createDb>>, {
+  get(_target, prop) {
+    return (...args: unknown[]) => {
+      return getDb().then((instance) => {
+        // @ts-expect-error – dynamic proxy
+        return (instance[prop] as (...a: unknown[]) => unknown)(...args);
+      });
+    };
+  },
+});
 
 export * from "./schema";
