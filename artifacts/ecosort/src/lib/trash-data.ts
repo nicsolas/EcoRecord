@@ -152,5 +152,29 @@ export const TRASH_ITEMS: TrashItem[] = [
 ];
 
 export function shuffleAllItems(): TrashItem[] {
-  return [...TRASH_ITEMS].sort(() => Math.random() - 0.5);
+  // Group items by category and shuffle within each group
+  const groups = new Map<CategoryId, TrashItem[]>();
+  for (const item of TRASH_ITEMS) {
+    if (!groups.has(item.categoryId)) groups.set(item.categoryId, []);
+    groups.get(item.categoryId)!.push(item);
+  }
+  for (const [, items] of groups) {
+    items.sort(() => Math.random() - 0.5);
+  }
+
+  // Build result ensuring no two consecutive items share the same category
+  const queues = [...groups.entries()].map(([cat, items]) => ({ cat, items: [...items] }));
+  const result: TrashItem[] = [];
+  let lastCat: CategoryId | null = null;
+
+  while (queues.some(q => q.items.length > 0)) {
+    // Prefer queues that don't match the last category
+    const available = queues.filter(q => q.items.length > 0 && q.cat !== lastCat);
+    const pool = available.length > 0 ? available : queues.filter(q => q.items.length > 0);
+    const chosen = pool[Math.floor(Math.random() * pool.length)];
+    result.push(chosen.items.shift()!);
+    lastCat = chosen.cat;
+  }
+
+  return result;
 }
