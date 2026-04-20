@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+pnpm-lock.yaml
+
+# Build artifacts
+dist/
+.next/
+out/
+
+# Development
+.git/
+.env.local
+.env.*.local
+.DS_Store
+*.log
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Unnecessary packages
+mockup-sandbox/
+scripts/
+lib/api-spec/

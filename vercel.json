@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "buildCommand": "pnpm install && pnpm run build",
+  "outputDirectory": "artifacts/ecosort/dist",
+  "public": false,
+  "installCommand": "pnpm install --frozen-lockfile",
+  "framework": "vite",
+  "env": {
+    "PORT": "3000",
+    "BASE_PATH": "/"
+  },
+  "git": {
+    "silent": true
+  }
+}
