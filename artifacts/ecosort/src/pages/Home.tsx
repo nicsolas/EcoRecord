@@ -12,8 +12,8 @@ export default function Home() {
 
   // Pre-fill if exists
   useEffect(() => {
-    const u = sessionStorage.getItem('ecosort_username');
-    const e = sessionStorage.getItem('ecosort_email');
+    const u = sessionStorage.getItem('ekosmos_username');
+    const e = sessionStorage.getItem('ekosmos_email');
     if (u) setUsername(u);
     if (e) setEmail(e);
   }, []);
@@ -22,9 +22,9 @@ export default function Home() {
     e.preventDefault();
     if (!username.trim() || !email.trim()) return;
     
-    sessionStorage.setItem('ecosort_username', username.trim());
-    sessionStorage.setItem('ecosort_email', email.trim());
-    sessionStorage.setItem('ecosort_gameName', 'EcoSort Challenge');
+    sessionStorage.setItem('ekosmos_username', username.trim());
+    sessionStorage.setItem('ekosmos_email', email.trim());
+    sessionStorage.setItem('ekosmos_gameName', 'e-kosmos Challenge');
     setLocation('/play');
   };
 
@@ -101,7 +101,7 @@ export default function Home() {
         >
           <img 
             src={`${import.meta.env.BASE_URL}images/hero-eco.png`} 
-            alt="EcoSort Park" 
+            alt="e-kosmos Park" 
             className="w-full max-w-md rounded-3xl shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500"
           />
 

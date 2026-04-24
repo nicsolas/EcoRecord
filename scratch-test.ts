@@ -1,12 +1,11 @@
-import { getDb, usersTable } from "./lib/db/src/index.js";
-async function run() {
-  console.log("Testing getDb...");
-  try {
-    const db = await getDb();
-    const res = await db.select().from(usersTable);
-    console.log("Success:", res);
-  } catch(e) {
-    console.error("Error:", e);
-  }
+import { config } from "dotenv";
+config({ path: ".env.development.local" });
+import { neon } from "@neondatabase/serverless";
+
+async function main() {
+  console.log("Connecting to:", process.env.DATABASE_URL);
+  const sql = neon(process.env.DATABASE_URL);
+  const users = await sql`SELECT * FROM users`;
+  console.log(users);
 }
-run();
+main().catch(console.error);

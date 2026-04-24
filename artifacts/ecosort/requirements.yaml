@@ -12,6 +12,8 @@ images:
     aspect_ratio: "16:9"
   - path: "artifacts/ecosort/public/images/mascot.png"
     description: "A cute, friendly cartoon Earth globe mascot character smiling and giving a thumbs up. Clean vector art, solid transparent background style, vibrant colors."
+  - path: "artifacts/ecosort/public/images/logo-e-kosmos.png"
+    description: "The official logo for e-kosmos, featuring a stylized Earth with recycling symbols and cosmic orbits."
     aspect_ratio: "1:1"
 
 notes:

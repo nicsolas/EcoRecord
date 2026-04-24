@@ -5,11 +5,13 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="bg-primary text-primary-foreground p-2 rounded-xl group-hover:rotate-12 transition-transform">
-            <Leaf className="w-5 h-5" />
-          </div>
-          <span className="font-display text-2xl font-bold text-foreground tracking-tight">Eco<span className="text-primary">Sort</span></span>
+        <Link href="/" className="flex items-center gap-3 group">
+          <img 
+            src={`${import.meta.env.BASE_URL}images/logo-e-kosmos.png`} 
+            alt="e-kosmos" 
+            className="h-10 w-auto group-hover:scale-110 transition-transform"
+          />
+          <span className="font-display text-2xl font-bold text-foreground tracking-tight">e-<span className="text-primary">kosmos</span></span>
         </Link>
         
         <nav className="flex items-center gap-2">

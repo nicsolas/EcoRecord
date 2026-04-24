@@ -21,13 +21,13 @@ export default function Results() {
   const { mutate: submitScore, isPending } = useSubmitScore();
 
   useEffect(() => {
-    const s = sessionStorage.getItem('ecosort_last_score');
-    const c = sessionStorage.getItem('ecosort_last_correct');
-    const w = sessionStorage.getItem('ecosort_last_wrong');
-    const t = sessionStorage.getItem('ecosort_last_total');
-    const u = sessionStorage.getItem('ecosort_username');
-    const e = sessionStorage.getItem('ecosort_email');
-    const g = sessionStorage.getItem('ecosort_gameName') || 'EcoSort Challenge';
+    const s = sessionStorage.getItem('ekosmos_last_score');
+    const c = sessionStorage.getItem('ekosmos_last_correct');
+    const w = sessionStorage.getItem('ekosmos_last_wrong');
+    const t = sessionStorage.getItem('ekosmos_last_total');
+    const u = sessionStorage.getItem('ekosmos_username');
+    const e = sessionStorage.getItem('ekosmos_email');
+    const g = sessionStorage.getItem('ekosmos_gameName') || 'e-kosmos Challenge';
 
     if (!s || !u || !e) { setLocation('/'); return; }
 

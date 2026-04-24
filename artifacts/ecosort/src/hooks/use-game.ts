@@ -36,11 +36,11 @@ export function useGame() {
     setGameState('finished');
     const score = finalCorrect * 10;
     const timeTaken = TOTAL_SECONDS - finalTime;
-    sessionStorage.setItem('ecosort_last_score', score.toString());
-    sessionStorage.setItem('ecosort_last_correct', finalCorrect.toString());
-    sessionStorage.setItem('ecosort_last_wrong', finalWrong.toString());
-    sessionStorage.setItem('ecosort_last_total', (finalCorrect + finalWrong).toString());
-    sessionStorage.setItem('ecosort_last_time', timeTaken.toString());
+    sessionStorage.setItem('ekosmos_last_score', score.toString());
+    sessionStorage.setItem('ekosmos_last_correct', finalCorrect.toString());
+    sessionStorage.setItem('ekosmos_last_wrong', finalWrong.toString());
+    sessionStorage.setItem('ekosmos_last_total', (finalCorrect + finalWrong).toString());
+    sessionStorage.setItem('ekosmos_last_time', timeTaken.toString());
     setTimeout(() => setLocation('/results'), 600);
   }, [stopTimer, setLocation]);
 
