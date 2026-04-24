@@ -15,6 +15,7 @@ async function createDb() {
   const url = await import("url");
   const { PGlite } = await import("@electric-sql/pglite");
   const { drizzle } = await import("drizzle-orm/pglite");
+  // @ts-ignore
   const currentDir = path.dirname(url.fileURLToPath(import.meta.url));
   const isBundled = currentDir.includes("api-server");
   const dbPath = isBundled
