@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router, type Request, type Response } from "express";
 import { getDb, usersTable, gamesTable, scoresTable, eq, desc, sql } from "@workspace/db";
 
 const router = Router();
@@ -14,7 +14,7 @@ function isValidSubmitBody(body: unknown): body is { username: string; email: st
   );
 }
 
-router.get("/scores", async (req, res) => {
+router.get("/scores", async (req: Request, res: Response) => {
   const limit = Math.min(Number(req.query.limit) || 20, 100);
 
   // Group by user and game to get max score
@@ -43,7 +43,7 @@ router.get("/scores", async (req, res) => {
   res.json(withRank);
 });
 
-router.get("/scores/player", async (req, res) => {
+router.get("/scores/player", async (req: Request, res: Response) => {
   const email = String(req.query.email || "");
 
   if (!email) {
@@ -85,7 +85,7 @@ router.get("/scores/player", async (req, res) => {
   res.json({ ...rows[0], rank });
 });
 
-router.post("/scores", async (req, res) => {
+router.post("/scores", async (req: Request, res: Response) => {
   if (!isValidSubmitBody(req.body)) {
     res.status(400).json({ error: "Invalid request body" });
     return;
