@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "pnpm --filter @workspace/ecosort run build",
+  "buildCommand": "pnpm --filter @workspace/e-kosmos run build",
   "outputDirectory": "artifacts/ecosort/dist/public",
   "installCommand": "pnpm install",
   "framework": null,
