@@ -1,8 +1,7 @@
-import { Router, type IRouter } from "express";
-import { db, usersTable, gamesTable, scoresTable } from "@workspace/db";
-import { eq, desc, sql } from "drizzle-orm";
+import { Router } from "express";
+import { getDb, usersTable, gamesTable, scoresTable, eq, desc, sql } from "@workspace/db";
 
-const router: IRouter = Router();
+const router = Router();
 
 function isValidSubmitBody(body: unknown): body is { username: string; email: string; gameName: string; score: number } {
   if (!body || typeof body !== "object") return false;
@@ -19,6 +18,7 @@ router.get("/scores", async (req, res) => {
   const limit = Math.min(Number(req.query.limit) || 20, 100);
 
   // Group by user and game to get max score
+  const db = await getDb();
   const rows = await db
     .select({
       id: usersTable.id,
@@ -52,6 +52,7 @@ router.get("/scores/player", async (req, res) => {
   }
 
   // Find the highest score for this user
+  const db = await getDb();
   const rows = await db
     .select({
       id: scoresTable.id,
@@ -93,6 +94,7 @@ router.post("/scores", async (req, res) => {
   const { username, email, gameName, score } = req.body;
 
   // Upsert user
+  const db = await getDb();
   const users = await db.select().from(usersTable).where(eq(sql`lower(${usersTable.email})`, email.toLowerCase())).limit(1);
   let userId;
   if (users.length > 0) {

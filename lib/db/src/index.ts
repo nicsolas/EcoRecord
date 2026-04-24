@@ -32,16 +32,7 @@ function getDb() {
   return _dbPromise;
 }
 
-// Re-export a proxy object so callers can `await db.select(...)` naturally
-export const db = new Proxy({} as Awaited<ReturnType<typeof createDb>>, {
-  get(_target, prop) {
-    return (...args: unknown[]) => {
-      return getDb().then((instance) => {
-        // @ts-expect-error – dynamic proxy
-        return (instance[prop] as (...a: unknown[]) => unknown)(...args);
-      });
-    };
-  },
-});
+export { getDb };
 
 export * from "./schema";
+export { sql, eq, desc } from "drizzle-orm";
