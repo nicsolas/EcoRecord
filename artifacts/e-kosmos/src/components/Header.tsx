@@ -8,10 +8,10 @@ export function Header() {
         <Link href="/" className="flex items-center gap-3 group">
           <img 
             src={`${import.meta.env.BASE_URL}images/logo-e-kosmos.png`} 
-            alt="e-kosmos" 
+            alt="E-kosmos" 
             className="h-10 w-auto group-hover:scale-110 transition-transform"
           />
-          <span className="font-display text-2xl font-bold text-foreground tracking-tight">e-<span className="text-primary">kosmos</span></span>
+          <span className="font-display text-2xl font-bold text-foreground tracking-tight">E-<span className="text-primary">kosmos</span></span>
         </Link>
         
         <nav className="flex items-center gap-2">

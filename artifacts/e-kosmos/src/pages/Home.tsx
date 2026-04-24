@@ -24,7 +24,7 @@ export default function Home() {
     
     sessionStorage.setItem('ekosmos_username', username.trim());
     sessionStorage.setItem('ekosmos_email', email.trim());
-    sessionStorage.setItem('ekosmos_gameName', 'e-kosmos Challenge');
+    sessionStorage.setItem('ekosmos_gameName', 'E-kosmos Challenge');
     setLocation('/play');
   };
 
@@ -101,7 +101,7 @@ export default function Home() {
         >
           <img 
             src={`${import.meta.env.BASE_URL}images/hero-eco.png`} 
-            alt="e-kosmos Park" 
+            alt="E-kosmos Park" 
             className="w-full max-w-md rounded-3xl shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500"
           />
 

@@ -27,7 +27,7 @@ export default function Results() {
     const t = sessionStorage.getItem('ekosmos_last_total');
     const u = sessionStorage.getItem('ekosmos_username');
     const e = sessionStorage.getItem('ekosmos_email');
-    const g = sessionStorage.getItem('ekosmos_gameName') || 'e-kosmos Challenge';
+    const g = sessionStorage.getItem('ekosmos_gameName') || 'E-kosmos Challenge';
 
     if (!s || !u || !e) { setLocation('/'); return; }
 
