@@ -87,4 +87,4 @@ Every package extends `tsconfig.base.json` which sets `composite: true`. The roo
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API client
 - `pnpm --filter @workspace/db run push` — push DB schema changes
 - `pnpm --filter @workspace/api-server run dev` — run API server
-- `pnpm --filter @workspace/ecosort run dev` — run frontend
+- `pnpm --filter @workspace/e-kosmos run dev` — run frontend
