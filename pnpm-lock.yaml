@@ -139,7 +139,7 @@ importers:
         specifier: 3.1.0
         version: 3.1.0
 
-  artifacts/ecosort:
+  artifacts/e-kosmos:
     dependencies:
       canvas-confetti:
         specifier: ^1.9.4
