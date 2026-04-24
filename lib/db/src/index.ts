@@ -11,16 +11,23 @@ async function createDb() {
   }
 
   // Local dev fallback: PGlite (no DATABASE_URL needed)
+  if (process.env.VERCEL) {
+    throw new Error("DATABASE_URL environment variable is missing on Vercel!");
+  }
   const path = await import("path");
-  const url = await import("url");
+  const fs = await import("fs");
   const { PGlite } = await import("@electric-sql/pglite");
   const { drizzle } = await import("drizzle-orm/pglite");
-  // @ts-ignore
-  const currentDir = path.dirname(url.fileURLToPath(import.meta.url));
-  const isBundled = currentDir.includes("api-server");
-  const dbPath = isBundled
-    ? path.resolve(currentDir, "..", "..", "..", "lib", "db", "pglite-db")
-    : path.resolve(currentDir, "..", "pglite-db");
+  
+  let currentDir = process.cwd();
+  while (currentDir !== path.parse(currentDir).root) {
+    if (fs.existsSync(path.join(currentDir, "pnpm-workspace.yaml"))) {
+      break;
+    }
+    currentDir = path.dirname(currentDir);
+  }
+  
+  const dbPath = path.resolve(currentDir, "lib", "db", "pglite-db");
   const client = new PGlite(dbPath);
   return drizzle(client, { schema });
 }
