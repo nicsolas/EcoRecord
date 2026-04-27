@@ -7,6 +7,7 @@ import { Layout } from "@/components/Layout";
 
 // Pages
 import Home from "@/pages/Home";
+import GameStart from "@/pages/GameStart";
 import Game from "@/pages/Game";
 import Results from "@/pages/Results";
 import Leaderboard from "@/pages/Leaderboard";
@@ -25,6 +26,7 @@ function Router() {
     <Layout>
       <Switch>
         <Route path="/" component={Home} />
+        <Route path="/gioca" component={GameStart} />
         <Route path="/play" component={Game} />
         <Route path="/results" component={Results} />
         <Route path="/leaderboard" component={Leaderboard} />
