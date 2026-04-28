@@ -10,12 +10,11 @@
     "typecheck:libs": "tsc --build",
     "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck"
   },
-  "private": true,
   "devDependencies": {
     "prettier": "^3.8.1",
     "typescript": "~5.9.2"
   },
   "engines": {
-    "node": "22.x"
+    "node": ">=22"
   }
 }
