@@ -58,8 +58,10 @@ export function useGame() {
   }, [stopTimer]);
 
   // Global countdown timer
+  const isGameActive = gameState === 'playing' || gameState === 'feedback';
+
   useEffect(() => {
-    if (gameState !== 'playing') return;
+    if (!isGameActive) return;
 
     timerRef.current = setInterval(() => {
       setTimeLeft(prev => {
@@ -71,7 +73,7 @@ export function useGame() {
     }, 1000);
 
     return () => stopTimer();
-  }, [gameState, stopTimer]);
+  }, [isGameActive, stopTimer]);
 
   // Watch for time running out
   useEffect(() => {
