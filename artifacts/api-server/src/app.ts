@@ -34,7 +34,7 @@ app.use("/api", router);
 app.use("/", router);
 
 // Health check outside the router just in case
-app.get("/health-raw", (req, res) => res.json({ status: "ok", timestamp: new Date().toISOString() }));
+app.get("/health-raw", (req: any, res: any) => res.json({ status: "ok", timestamp: new Date().toISOString() }));
 
 // Global error handler
 app.use((err: any, req: any, res: any, next: any) => {
