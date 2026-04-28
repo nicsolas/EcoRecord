@@ -1,6 +1,6 @@
 import { Router } from "express";
 import crypto from "crypto";
-import { getDb, usersTable, gamesTable, scoresTable, eq, desc, sql } from "@workspace/db";
+import { getDb, usersTable, gamesTable, scoresTable, eq, desc, sql } from "../_db/index.js";
 
 const router = Router();
 

@@ -9,7 +9,7 @@ const router = Router();
 router.get("/health-raw", (req: any, res: any) => res.json({ status: "ok", timestamp: new Date().toISOString() }));
 router.get("/db-test", async (req: any, res: any) => {
   try {
-    const { getDb } = await import("@workspace/db");
+    const { getDb } = await import("../_db/index.js");
     const db = await getDb();
     const { sql } = await import("drizzle-orm");
     await (db as any).execute(sql`SELECT 1`);

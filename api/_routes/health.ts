@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getDb, sql } from "@workspace/db";
+import { getDb, sql } from "../_db/index.js";
 
 const router = Router();
 
