@@ -90,6 +90,9 @@ export default function GameStart() {
               <span className="relative z-10">Gioca Ora</span>
               <Play className="w-6 h-6 fill-current relative z-10" />
             </button>
+            <p className="text-xs text-muted-foreground/80 text-center px-2 mt-1">
+              *se lo username sarà ritenuto offensivo dal sistema il punteggio non potrà essere salvato
+            </p>
           </form>
         </motion.div>
 
