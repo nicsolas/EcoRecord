@@ -3,15 +3,10 @@
   "buildCommand": "pnpm --filter @workspace/e-kosmos run build",
   "outputDirectory": "artifacts/e-kosmos/dist/public",
   "installCommand": "pnpm install",
-  "framework": null,
   "rewrites": [
     {
-      "source": "/api/ping",
-      "destination": "/artifacts/e-kosmos/api/ping.ts"
-    },
-    {
       "source": "/api/:path*",
-      "destination": "/artifacts/e-kosmos/api/index.ts"
+      "destination": "/api/index.ts"
     },
     {
       "source": "/((?!api/).*)",
