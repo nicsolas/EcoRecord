@@ -36,7 +36,7 @@ export default function Leaderboard() {
         </div>
       )}
 
-      {scores && scores.length === 0 && (
+      {Array.isArray(scores) && scores.length === 0 && (
         <div className="text-center p-12 bg-card rounded-3xl border border-border">
           <div className="text-6xl mb-4">🌱</div>
           <h3 className="text-xl font-bold">Nessun punteggio ancora!</h3>
@@ -44,7 +44,7 @@ export default function Leaderboard() {
         </div>
       )}
 
-      {scores && scores.length > 0 && (
+      {Array.isArray(scores) && scores.length > 0 && (
         <div className="bg-card rounded-3xl shadow-xl border border-border/50 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">

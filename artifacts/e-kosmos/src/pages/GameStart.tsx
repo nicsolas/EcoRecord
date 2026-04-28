@@ -106,7 +106,7 @@ export default function GameStart() {
             className="w-full max-w-md rounded-3xl shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500"
           />
 
-          {leaderboard && leaderboard.length > 0 && (
+          {Array.isArray(leaderboard) && leaderboard.length > 0 && (
             <div className="w-full max-w-md bg-white rounded-3xl p-6 shadow-lg border border-border">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">

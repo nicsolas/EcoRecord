@@ -283,6 +283,11 @@ function inferResponseType(response: Response): "json" | "text" | "blob" {
   const mediaType = getMediaType(response.headers);
 
   if (isJsonMediaType(mediaType)) return "json";
+  
+  // If it's HTML, it's likely a Vercel auth page or a custom error page.
+  // We treat it as text but downstream we should be aware of this.
+  if (mediaType === "text/html") return "text";
+
   if (isTextMediaType(mediaType) || mediaType == null) return "text";
   return "blob";
 }
