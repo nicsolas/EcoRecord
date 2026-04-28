@@ -1,10 +1,12 @@
+import { useMemo } from 'react';
 import { useGetLeaderboard } from '@workspace/api-client-react';
 import { motion } from 'framer-motion';
 import { Trophy, Medal, Star, ArrowLeft } from 'lucide-react';
 import { Link } from 'wouter';
 
 export default function Leaderboard() {
-  const { data: scores, isLoading, error } = useGetLeaderboard({ limit: 50 });
+  const params = useMemo(() => ({ limit: 50 }), []);
+  const { data: scores, isLoading, error } = useGetLeaderboard(params);
 
   return (
     <div className="flex-1 flex flex-col max-w-4xl mx-auto w-full p-4 md:p-8">

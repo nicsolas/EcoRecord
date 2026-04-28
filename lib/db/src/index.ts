@@ -1,20 +1,17 @@
 import * as schema from "./schema";
 
 /**
- * Strip problematic connection-string parameters that the Neon HTTP driver
- * does not understand (e.g. channel_binding, sslmode).  These are libpq
- * wire-protocol options that break the HTTP proxy.
+ * Clean the connection URL to remove parameters incompatible with the Neon HTTP driver
  */
-function cleanConnectionUrl(raw: string): string {
+function cleanConnectionUrl(url: string): string {
   try {
-    const u = new URL(raw);
-    u.searchParams.delete("channel_binding");
-    // sslmode is already implicit over HTTPS, remove to avoid issues
+    const u = new URL(url);
     u.searchParams.delete("sslmode");
+    u.searchParams.delete("channel_binding");
     return u.toString();
   } catch {
-    // If URL parsing fails, return as-is and let the driver error
-    return raw;
+    // Fallback: manually strip if URL parsing fails
+    return url.replace(/(\?|&)(channel_binding|sslmode)=[^&]+/g, "");
   }
 }
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useLocation, Link } from 'wouter';
 import { motion } from 'framer-motion';
 import { Play, Leaf, Trophy } from 'lucide-react';
@@ -8,7 +8,8 @@ export default function GameStart() {
   const [, setLocation] = useLocation();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
-  const { data: leaderboard } = useGetLeaderboard({ limit: 3 });
+  const leaderboardParams = useMemo(() => ({ limit: 3 }), []);
+  const { data: leaderboard } = useGetLeaderboard(leaderboardParams);
 
   // Pre-fill if exists
   useEffect(() => {
