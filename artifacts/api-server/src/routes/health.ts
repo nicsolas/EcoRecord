@@ -1,11 +1,22 @@
 import { Router } from "express";
-import { HealthCheckResponse } from "@workspace/api-zod";
+import { getDb, sql } from "@workspace/db";
 
 const router = Router();
 
-router.get("/healthz", (_req: any, res: any) => {
-  const data = HealthCheckResponse.parse({ status: "ok" });
-  res.json(data);
+router.get("/healthz", async (_req: any, res: any) => {
+  try {
+    // Quick DB connectivity check
+    const db = await getDb();
+    await db.execute(sql`SELECT 1`);
+    res.json({ status: "ok", db: "connected" });
+  } catch (err: any) {
+    console.error("[health] DB connection error:", err);
+    res.status(503).json({
+      status: "error",
+      db: "disconnected",
+      error: err?.message ?? String(err),
+    });
+  }
 });
 
 export default router;
