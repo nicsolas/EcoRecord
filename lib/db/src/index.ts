@@ -21,21 +21,29 @@ function cleanConnectionUrl(raw: string): string {
 // Use Neon serverless when DATABASE_URL is available (production/staging),
 // otherwise fall back to local PGlite for offline development.
 async function createDb() {
-  const rawUrl = process.env.DATABASE_URL;
+  // Prioritise the unpooled URL for HTTP connections as recommended by Neon
+  const rawUrl = process.env.DATABASE_URL_UNPOOLED || 
+                 process.env.DATABASE_URL || 
+                 process.env.POSTGRES_URL;
 
   if (rawUrl) {
     const { neon } = await import("@neondatabase/serverless");
     const { drizzle } = await import("drizzle-orm/neon-http");
     const cleanUrl = cleanConnectionUrl(rawUrl);
-    console.log("[db] Connecting to Neon (HTTP)…", cleanUrl.replace(/:[^@]+@/, ":***@"));
+    const isUnpooled = rawUrl === process.env.DATABASE_URL_UNPOOLED;
+    
+    console.log(`[db] Connecting to Neon (HTTP)${isUnpooled ? " using unpooled URL" : ""}…`, cleanUrl.replace(/:[^@]+@/, ":***@"));
+    
     const sql = neon(cleanUrl);
     
-    // Quick connectivity test
-    try {
-      await sql`SELECT 1`;
-      console.log("[db] Neon connection verified.");
-    } catch (err: any) {
-      console.error("[db] Neon connection test failed:", err.message);
+    // Connectivity test - only in development to reduce cold-start latency in prod
+    if (process.env.NODE_ENV === "development" && !process.env.VERCEL) {
+      try {
+        await sql`SELECT 1`;
+        console.log("[db] Neon connection verified.");
+      } catch (err: any) {
+        console.error("[db] Neon connection test failed:", err.message);
+      }
     }
 
     return drizzle(sql, { schema });

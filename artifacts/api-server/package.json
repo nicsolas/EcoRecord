@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node -e \"process.env.NODE_ENV='development';require('child_process').execSync('pnpm run build && pnpm run start',{stdio:'inherit',env:{...process.env,NODE_ENV:'development'}})\"",
+    "dev": "node -e \"process.env.NODE_ENV='development'; process.env.PORT=process.env.PORT || '3000'; require('child_process').execSync('pnpm run build && node --env-file=../../.env ./dist/index.mjs',{stdio:'inherit',env:{...process.env,NODE_ENV:'development'}})\"",
     "build": "node ./build.mjs",
     "start": "node --enable-source-maps ./dist/index.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit"
