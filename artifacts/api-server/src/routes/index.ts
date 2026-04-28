@@ -13,13 +13,27 @@ router.get("/db-test", async (req: any, res: any) => {
     const db = await getDb();
     const { sql } = await import("drizzle-orm");
     await (db as any).execute(sql`SELECT 1`);
-    res.json({ status: "ok", message: "Database connection successful" });
+    res.json({ 
+      status: "ok", 
+      message: "Database connection successful",
+      env: {
+        DATABASE_URL: !!process.env.DATABASE_URL,
+        DATABASE_URL_UNPOOLED: !!process.env.DATABASE_URL_UNPOOLED,
+        POSTGRES_URL: !!process.env.POSTGRES_URL,
+        NODE_ENV: process.env.NODE_ENV,
+        VERCEL: !!process.env.VERCEL
+      }
+    });
   } catch (err: any) {
     res.status(500).json({ 
       status: "error", 
       message: "Database connection failed", 
       details: err?.message,
-      db_url_present: !!process.env.DATABASE_URL
+      env: {
+        DATABASE_URL: !!process.env.DATABASE_URL,
+        DATABASE_URL_UNPOOLED: !!process.env.DATABASE_URL_UNPOOLED,
+        POSTGRES_URL: !!process.env.POSTGRES_URL
+      }
     });
   }
 });
