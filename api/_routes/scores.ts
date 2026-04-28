@@ -107,7 +107,7 @@ router.post("/scores", async (req: any, res: any) => {
     const { isBanned } = await import("../_lib/banned-words.js");
     if (isBanned(username)) {
       console.warn(`[scores POST /scores] Rejected banned username: ${username}`);
-      res.status(400).json({ error: "Username non appropriato" });
+      res.status(400).json({ error: "Punteggio non salvato: il nome utente utilizzato non è appropriato" });
       return;
     }
 

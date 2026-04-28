@@ -19,7 +19,7 @@ export const bannedWords = [
   "scorreggiare", "sega", "slinguare", "slinguata", "smandrappata", "soccia", "socmel", "sorca",
   "spagnola", "spompinare", "sticchio", "stronza", "stronzata", "stronzo", "succhiami", "succhione",
   "sveltina", "sverginare", "tarzanello", "terrone", "tette", "topa", "troia", "trombare", "vacca",
-  "vaffanculo", "vangare", "zinne", "zoccola",
+  "vaffanculo", "vangare", "zinne", "zoccola","trum"
 
   // English (common)
   "fuck", "shit", "piss", "cunt", "cocksucker", "motherfucker", "tits", "faggot", "nigger", "bastard",
