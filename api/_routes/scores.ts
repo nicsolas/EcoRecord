@@ -103,6 +103,14 @@ router.post("/scores", async (req: any, res: any) => {
     const { username, email, gameName, score } = req.body;
     console.log(`[scores POST /scores] Received submission: ${username} (${email}), score: ${score}, game: ${gameName}`);
 
+    // Check for banned words
+    const { isBanned } = await import("../_lib/banned-words.js");
+    if (isBanned(username)) {
+      console.warn(`[scores POST /scores] Rejected banned username: ${username}`);
+      res.status(400).json({ error: "Username non appropriato" });
+      return;
+    }
+
     // Upsert user
     const db = await getDb();
     const users = await db.select().from(usersTable).where(eq(sql`lower(${usersTable.email})`, email.toLowerCase())).limit(1);
