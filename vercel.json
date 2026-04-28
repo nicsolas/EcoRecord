@@ -4,20 +4,14 @@
   "outputDirectory": "artifacts/e-kosmos/dist/public",
   "installCommand": "pnpm install",
   "framework": null,
-  "functions": {
-    "api/index.ts": {
-      "runtime": "@vercel/node@5.0.0",
-      "maxDuration": 30
-    }
-  },
   "rewrites": [
     {
       "source": "/api/ping",
-      "destination": "/api/ping.ts"
+      "destination": "/artifacts/e-kosmos/api/ping.ts"
     },
     {
       "source": "/api/:path*",
-      "destination": "/api/index.ts"
+      "destination": "/artifacts/e-kosmos/api/index.ts"
     },
     {
       "source": "/((?!api/).*)",
