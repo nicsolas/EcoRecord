@@ -100,6 +100,7 @@ router.post("/scores", async (req: any, res: any) => {
 
   try {
     const { username, email, gameName, score } = req.body;
+    console.log(`[scores POST /scores] Received submission: ${username} (${email}), score: ${score}, game: ${gameName}`);
 
     // Upsert user
     const db = await getDb();
@@ -152,7 +153,12 @@ router.post("/scores", async (req: any, res: any) => {
     res.json({ ...result, rank });
   } catch (err: any) {
     console.error("[scores POST /scores] DB error:", err);
-    res.status(500).json({ error: "Database error", details: err?.message ?? String(err) });
+    res.status(500).json({ 
+      error: "Database error", 
+      details: err?.message ?? String(err),
+      stack: process.env.NODE_ENV === 'development' ? err?.stack : undefined,
+      db_url_detected: !!process.env.DATABASE_URL
+    });
   }
 });
 

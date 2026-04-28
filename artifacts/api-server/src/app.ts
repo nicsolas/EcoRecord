@@ -29,6 +29,22 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Support both /api and root mounting for Vercel compatibility
 app.use("/api", router);
+app.use("/", router);
+
+// Health check outside the router just in case
+app.get("/health-raw", (req, res) => res.json({ status: "ok", timestamp: new Date().toISOString() }));
+
+// Global error handler
+app.use((err: any, req: any, res: any, next: any) => {
+  logger.error({ err, url: req.url, method: req.method }, "Unhandled API Error");
+  res.status(500).json({ 
+    error: "Internal Server Error", 
+    message: err?.message || "An unexpected error occurred",
+    path: req.url
+  });
+});
 
 export default app;
+

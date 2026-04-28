@@ -29,8 +29,19 @@ async function createDb() {
     const cleanUrl = cleanConnectionUrl(rawUrl);
     console.log("[db] Connecting to Neon (HTTP)…", cleanUrl.replace(/:[^@]+@/, ":***@"));
     const sql = neon(cleanUrl);
+    
+    // Quick connectivity test
+    try {
+      await sql`SELECT 1`;
+      console.log("[db] Neon connection verified.");
+    } catch (err: any) {
+      console.error("[db] Neon connection test failed:", err.message);
+    }
+
     return drizzle(sql, { schema });
   }
+
+  console.log("[db] No DATABASE_URL found, falling back to local PGlite.");
 
   // Local dev fallback: PGlite (no DATABASE_URL needed)
   if (process.env.VERCEL) {
