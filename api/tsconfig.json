@@ -11,6 +11,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
+    "lib": ["ESNext", "DOM"],
     "types": ["node"]
   },
   "include": ["**/*.ts"],

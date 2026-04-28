@@ -23,6 +23,9 @@
     "@electric-sql/pglite": "0.2.14"
   },
   "devDependencies": {
+    "@types/node": "^22.13.1",
+    "@types/express": "^5.0.0",
+    "@types/cors": "^2.8.17",
     "prettier": "^3.8.1",
     "typescript": "~5.9.2"
   },
