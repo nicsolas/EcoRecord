@@ -80,5 +80,5 @@ function getDb() {
 
 export { getDb };
 
-export * from "./schema";
+export * from "./schema/index.js";
 export { sql, eq, desc } from "drizzle-orm";
