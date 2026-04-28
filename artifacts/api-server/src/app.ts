@@ -42,7 +42,7 @@ app.get("/db-test", async (req: any, res: any) => {
     const db = await getDb();
     // Use a raw query to bypass schema issues for now
     const { sql } = await import("drizzle-orm");
-    await db.execute(sql`SELECT 1`);
+    await (db as any).execute(sql`SELECT 1`);
     res.json({ status: "ok", message: "Database connection successful" });
   } catch (err: any) {
     res.status(500).json({ 
