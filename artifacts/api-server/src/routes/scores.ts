@@ -1,4 +1,5 @@
 import { Router } from "express";
+import crypto from "crypto";
 import { getDb, usersTable, gamesTable, scoresTable, eq, desc, sql } from "@workspace/db";
 
 const router = Router();
@@ -113,22 +114,30 @@ router.post("/scores", async (req: any, res: any) => {
         await db.update(usersTable).set({ username }).where(eq(usersTable.id, userId));
       }
     } else {
-      const inserted = await db.insert(usersTable).values({ username, email }).returning();
+      const id = crypto.randomUUID();
+      console.log(`[scores POST /scores] Creating user with ID: ${id}`);
+      const inserted = await db.insert(usersTable).values({ id, username, email }).returning();
       userId = inserted[0].id;
     }
 
     // Upsert game
+    console.log(`[scores POST /scores] Checking game: ${gameName}`);
     const games = await db.select().from(gamesTable).where(eq(sql`lower(${gamesTable.name})`, gameName.toLowerCase())).limit(1);
     let gameId;
     if (games.length > 0) {
       gameId = games[0].id;
     } else {
-      const inserted = await db.insert(gamesTable).values({ name: gameName }).returning();
+      const id = crypto.randomUUID();
+      console.log(`[scores POST /scores] Creating game with ID: ${id}`);
+      const inserted = await db.insert(gamesTable).values({ id, name: gameName }).returning();
       gameId = inserted[0].id;
     }
 
     // Insert score
+    const scoreId = crypto.randomUUID();
+    console.log(`[scores POST /scores] Inserting score with ID: ${scoreId}`);
     const insertedScore = await db.insert(scoresTable).values({
+      id: scoreId,
       userId,
       gameId,
       score,
