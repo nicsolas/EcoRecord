@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Gamepad2, Recycle, Sparkles, X } from 'lucide-react';
+import { Gamepad2, Recycle, ArrowRight, X, Leaf, Wine, FileText, Package, Trash2, Cpu } from 'lucide-react';
 
 interface BinInfo {
   id: string;
   name: string;
-  emoji: string;
+  icon: React.ElementType;
   color: string;
   description: string;
   examples: string[];
@@ -17,7 +17,7 @@ const BINS: BinInfo[] = [
   {
     id: 'organico',
     name: 'Organico',
-    emoji: '🟤',
+    icon: Leaf,
     color: '#5a8a3c',
     description: 'Raccoglie scarti di cibo e materiali di origine naturale. Vengono trasformati in compost, un fertilizzante per il terreno.',
     examples: ['Bucce di frutta e verdura', 'Avanzi di cibo', 'Fondi di caffè e tè', 'Gusci d\'uovo', 'Fiori appassite', 'Pane raffermo'],
@@ -26,7 +26,7 @@ const BINS: BinInfo[] = [
   {
     id: 'vetro',
     name: 'Vetro',
-    emoji: '🟢',
+    icon: Wine,
     color: '#2d7a4a',
     description: 'Il vetro è riciclabile al 100% infinite volte. Sciacqua i contenitori e rimuovi i tappi prima di conferirli.',
     examples: ['Bottiglie di vino e birra', 'Barattoli di marmellata', 'Bottiglie d\'acqua in vetro', 'Flaconi di profumo', 'Vasetti di salsa'],
@@ -35,7 +35,7 @@ const BINS: BinInfo[] = [
   {
     id: 'carta',
     name: 'Carta',
-    emoji: '🔵',
+    icon: FileText,
     color: '#2563eb',
     description: 'Carta e cartone si riciclano per creare nuova carta. Appiattisci le scatole e assicurati che non siano sporche di cibo.',
     examples: ['Giornali e riviste', 'Scatole di cartone', 'Sacchetti di carta', 'Quaderni e libri', 'Cartoni delle uova'],
@@ -44,7 +44,7 @@ const BINS: BinInfo[] = [
   {
     id: 'multimateriale',
     name: 'Multi-mat.',
-    emoji: '🟡',
+    icon: Package,
     color: '#d97706',
     description: 'Plastica, alluminio e materiali misti. Schiaccia le bottiglie e sciacqua brevemente i contenitori.',
     examples: ['Bottiglie di plastica', 'Lattine di alluminio', 'Tetrapak', 'Sacchetti di plastica', 'Flaconi detersivo'],
@@ -53,8 +53,8 @@ const BINS: BinInfo[] = [
   {
     id: 'indifferenziato',
     name: 'Indiff.',
-    emoji: '⚫',
-    color: '#6b7280',
+    icon: Trash2,
+    color: '#4b5563',
     description: 'L\'ultimo ricorso: ciò che non può essere riciclato. L\'obiettivo è ridurre al minimo questa frazione.',
     examples: ['Mozziconi di sigaretta', 'Pannolini', 'Spazzolini', 'Gomme da masticare', 'Cotton fioc', 'Scontrini'],
     notAllowed: ['Batterie', 'Farmaci scaduti', 'Elettronica', 'Olio esausto'],
@@ -62,7 +62,7 @@ const BINS: BinInfo[] = [
   {
     id: 'raee',
     name: 'RAEE',
-    emoji: '🔌',
+    icon: Cpu,
     color: '#7c3aed',
     description: 'Rifiuti elettrici ed elettronici: vanno nei centri di raccolta. Contengono materiali preziosi e sostanze pericolose.',
     examples: ['Smartphone rotti', 'Pile scariche', 'Caricabatterie', 'Lampadine LED', 'Elettrodomestici rotti', 'Cavi e cuffie'],
@@ -75,28 +75,28 @@ export default function Home() {
   const selected = BINS.find((b) => b.id === selectedId) ?? null;
 
   return (
-    <div className="flex-1 flex flex-col items-center p-4 md:p-8">
-      <div className="w-full max-w-4xl mx-auto">
+    <div className="flex-1 flex flex-col items-center p-4 md:p-8 min-h-full">
+      <div className="w-full max-w-5xl mx-auto">
 
         {/* Hero */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mt-6 md:mt-10 mb-8"
+          className="text-center mt-6 md:mt-10 mb-12"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary font-bold text-sm mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-bold uppercase tracking-wider mb-6">
             <Recycle className="w-4 h-4" />
-            <span>Impara la raccolta differenziata</span>
+            <span>Guida al Riciclo</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-display font-bold text-foreground leading-tight">
-            Come fare la{' '}
-            <span className="text-primary relative inline-block">
-              Differenziata
-              <div className="absolute -bottom-2 left-0 w-full h-3 bg-secondary/50 rounded-full -z-10" />
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold text-foreground tracking-tight leading-tight">
+            Impara a separare <br className="hidden sm:block" />
+            <span className="text-primary relative inline-block mt-2">
+              i rifiuti correttamente
+              <div className="absolute -bottom-1 sm:-bottom-2 left-0 w-full h-2 sm:h-3 bg-primary/20 rounded-full -z-10" />
             </span>
           </h1>
-          <p className="mt-3 text-base text-muted-foreground max-w-lg mx-auto">
-            Clicca su un cassonetto per scoprire cosa si butta e cosa no!
+          <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Esplora le categorie per scoprire le istruzioni dettagliate su cosa conferire e cosa evitare per un riciclo perfetto.
           </p>
         </motion.div>
 
@@ -105,67 +105,51 @@ export default function Home() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="flex justify-center gap-3 md:gap-5 flex-wrap"
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 md:gap-4"
         >
           {BINS.map((bin) => {
             const isActive = selectedId === bin.id;
+            const Icon = bin.icon;
+            
             return (
               <motion.button
                 key={bin.id}
                 onClick={() => setSelectedId(isActive ? null : bin.id)}
-                whileHover={{ scale: 1.08, y: -4 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex flex-col items-center gap-2.5 group outline-none"
+                whileHover={{ y: -4, scale: 1.02 }}
+                whileTap={{ scale: 0.96 }}
+                className={`relative flex flex-col items-center justify-center p-4 h-32 rounded-2xl border transition-all duration-300 outline-none ${
+                  isActive 
+                    ? 'bg-card shadow-lg z-10' 
+                    : 'bg-card/50 hover:bg-card border-border hover:border-muted-foreground/30 hover:shadow-md'
+                }`}
+                style={{
+                  borderColor: isActive ? bin.color : undefined,
+                  boxShadow: isActive ? `0 10px 25px -5px ${bin.color}40` : undefined,
+                }}
               >
-                {/* Trash bin */}
-                <div
-                  className="relative cursor-pointer transition-all duration-200"
-                  style={{
-                    filter: isActive
-                      ? `drop-shadow(0 8px 20px ${bin.color}50)`
-                      : `drop-shadow(0 4px 10px ${bin.color}30)`,
-                    transform: isActive ? 'translateY(-4px)' : undefined,
+                <div 
+                  className="p-3 rounded-xl mb-3 transition-colors duration-300 bg-secondary"
+                  style={{ 
+                    backgroundColor: isActive ? `${bin.color}15` : undefined,
+                    color: isActive ? bin.color : 'hsl(var(--muted-foreground))'
                   }}
                 >
-                  {/* Handle on lid */}
-                  <div
-                    className="mx-auto w-6 md:w-8 h-2.5 md:h-3 rounded-t-full"
-                    style={{ backgroundColor: bin.color }}
-                  />
-                  {/* Lid */}
-                  <div
-                    className="w-18 md:w-22 h-3 md:h-3.5 rounded-t-lg"
-                    style={{
-                      backgroundColor: bin.color,
-                      boxShadow: `inset 0 -2px 0 ${bin.color}99`,
-                    }}
-                  />
-                  {/* Body — trapezoid via clip-path */}
-                  <div
-                    className="w-18 md:w-22 h-14 md:h-18 flex items-center justify-center text-2xl md:text-3xl rounded-b-lg"
-                    style={{
-                      backgroundColor: isActive ? bin.color : bin.color + 'dd',
-                      clipPath: 'polygon(6% 0%, 94% 0%, 88% 100%, 12% 100%)',
-                    }}
-                  >
-                    <span className="drop-shadow-md select-none">{bin.emoji}</span>
-                  </div>
-
-                  {/* Active glow ring */}
-                  {isActive && (
-                    <motion.div
-                      layoutId="bin-dot"
-                      className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full"
-                      style={{ backgroundColor: bin.color }}
-                    />
-                  )}
+                  <Icon className="w-7 h-7" strokeWidth={isActive ? 2.5 : 2} />
                 </div>
                 <span
-                  className="text-xs md:text-sm font-bold transition-colors"
-                  style={{ color: isActive ? bin.color : '#64748b' }}
+                  className="text-sm font-semibold transition-colors"
+                  style={{ color: isActive ? bin.color : 'hsl(var(--foreground))' }}
                 >
                   {bin.name}
                 </span>
+                
+                {isActive && (
+                  <motion.div
+                    layoutId="active-indicator"
+                    className="absolute -bottom-px left-1/2 -translate-x-1/2 w-12 h-1 rounded-t-full"
+                    style={{ backgroundColor: bin.color }}
+                  />
+                )}
               </motion.button>
             );
           })}
@@ -176,85 +160,107 @@ export default function Home() {
           {selected && (
             <motion.div
               key={selected.id}
-              initial={{ opacity: 0, y: 16, height: 0 }}
+              initial={{ opacity: 0, y: 10, height: 0 }}
               animate={{ opacity: 1, y: 0, height: 'auto' }}
-              exit={{ opacity: 0, y: -8, height: 0 }}
-              transition={{ type: 'spring', bounce: 0.25, duration: 0.45 }}
-              className="mt-8 overflow-hidden"
+              exit={{ opacity: 0, y: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              className="mt-6 overflow-hidden"
             >
-              <div
-                className="rounded-3xl border-2 bg-white shadow-xl relative"
-                style={{ borderColor: selected.color + '35' }}
+              <div 
+                className="bg-card rounded-3xl border shadow-xl overflow-hidden flex flex-col md:flex-row relative"
+                style={{ borderColor: `${selected.color}30` }}
               >
-                {/* Header stripe */}
-                <div
-                  className="flex items-center gap-3 px-6 py-4 rounded-t-3xl"
-                  style={{ background: `linear-gradient(135deg, ${selected.color}18, ${selected.color}08)` }}
+                {/* Left/Top Info Sidebar */}
+                <div 
+                  className="p-6 md:p-8 md:w-1/3 flex flex-col relative"
+                  style={{ background: `linear-gradient(145deg, ${selected.color}10, ${selected.color}05)` }}
                 >
-                  <span className="text-3xl">{selected.emoji}</span>
-                  <div className="flex-1">
-                    <h2 className="font-display text-xl font-bold" style={{ color: selected.color }}>
-                      {BINS.find((b) => b.id === selected.id)?.name === selected.name
-                        ? selected.id === 'carta'
-                          ? 'Carta e Cartone'
-                          : selected.id === 'multimateriale'
-                          ? 'Multi-materiale'
-                          : selected.id === 'indifferenziato'
-                          ? 'Indifferenziato'
-                          : selected.name
-                        : selected.name}
-                    </h2>
-                    <p className="text-sm text-foreground/60 leading-snug mt-0.5">{selected.description}</p>
-                  </div>
-                  <button
-                    onClick={() => setSelectedId(null)}
-                    className="p-1.5 rounded-full hover:bg-black/5 transition-colors"
-                  >
-                    <X className="w-5 h-5 text-muted-foreground" />
-                  </button>
-                </div>
-
-                {/* Content */}
-                <div className="px-6 pb-6 pt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* What goes here */}
-                  <div
-                    className="rounded-2xl p-4"
-                    style={{ backgroundColor: selected.color + '0a' }}
-                  >
-                    <h4
-                      className="font-display font-bold text-sm uppercase tracking-wide mb-2.5"
+                  {/* Decorative accent line */}
+                  <div 
+                    className="absolute top-0 left-0 w-full h-1 md:w-1.5 md:h-full"
+                    style={{ backgroundColor: selected.color }}
+                  />
+                  
+                  <div className="flex items-center justify-between mb-6">
+                    <div 
+                      className="p-3.5 rounded-2xl bg-background shadow-sm"
                       style={{ color: selected.color }}
                     >
-                      ✅ Cosa va qui
+                      <selected.icon className="w-7 h-7" />
+                    </div>
+                    <button
+                      onClick={() => setSelectedId(null)}
+                      className="md:hidden p-2 rounded-full hover:bg-black/5 text-muted-foreground transition-colors"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
+                  
+                  <h2 
+                    className="font-display text-3xl font-bold mb-3"
+                    style={{ color: selected.color }}
+                  >
+                    {selected.id === 'carta'
+                      ? 'Carta e Cartone'
+                      : selected.id === 'multimateriale'
+                      ? 'Multi-materiale'
+                      : selected.name}
+                  </h2>
+                  <p className="text-foreground/80 leading-relaxed text-sm md:text-base font-medium">
+                    {selected.description}
+                  </p>
+                </div>
+
+                {/* Right/Bottom Lists */}
+                <div className="p-6 md:p-8 md:w-2/3 bg-card grid grid-cols-1 sm:grid-cols-2 gap-8 relative">
+                  <button
+                    onClick={() => setSelectedId(null)}
+                    className="hidden md:flex absolute top-5 right-5 p-2 rounded-full hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+
+                  <div>
+                    <h4 
+                      className="flex items-center gap-2.5 font-bold text-sm uppercase tracking-wide mb-4"
+                      style={{ color: selected.color }}
+                    >
+                      <div className="w-6 h-6 rounded-full flex items-center justify-center" style={{ backgroundColor: `${selected.color}20` }}>
+                        <Leaf className="w-3.5 h-3.5" style={{ color: selected.color }} />
+                      </div>
+                      Cosa va qui
                     </h4>
-                    <ul className="space-y-1.5">
+                    <ul className="space-y-3">
                       {selected.examples.map((ex) => (
-                        <li key={ex} className="flex items-center gap-2 text-sm text-foreground/70">
-                          <span
-                            className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                        <li key={ex} className="flex items-start gap-3 text-sm md:text-base text-foreground/80 font-medium">
+                          <span 
+                            className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0"
                             style={{ backgroundColor: selected.color }}
                           />
-                          {ex}
+                          <span className="leading-tight">{ex}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
-                  {/* What does NOT go here */}
-                  <div className="rounded-2xl p-4 bg-red-50/60">
-                    <h4 className="font-display font-bold text-sm uppercase tracking-wide mb-2.5 text-red-600">
-                      ❌ Cosa NON va qui
+                  <div className="p-5 rounded-2xl bg-destructive/5 border border-destructive/10">
+                    <h4 className="flex items-center gap-2.5 font-bold text-sm uppercase tracking-wide mb-4 text-destructive">
+                      <div className="w-6 h-6 rounded-full bg-destructive/10 flex items-center justify-center">
+                        <X className="w-3.5 h-3.5 text-destructive" strokeWidth={3} />
+                      </div>
+                      Cosa NON va qui
                     </h4>
-                    <ul className="space-y-1.5">
+                    <ul className="space-y-3">
                       {selected.notAllowed.map((na) => (
-                        <li key={na} className="flex items-center gap-2 text-sm text-foreground/70">
-                          <span className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
-                          {na}
+                        <li key={na} className="flex items-start gap-3 text-sm md:text-base text-foreground/80 font-medium">
+                          <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-destructive flex-shrink-0" />
+                          <span className="leading-tight">{na}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                 </div>
+                
               </div>
             </motion.div>
           )}
@@ -264,22 +270,28 @@ export default function Home() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="mt-14 mb-8 text-center"
+          transition={{ delay: 0.3 }}
+          className="mt-16 mb-8 text-center"
         >
-          <p className="text-muted-foreground mb-4 font-medium">
-            Hai imparato le regole? Metti alla prova le tue abilità! 🎮
+          <div className="h-px w-full max-w-md mx-auto bg-gradient-to-r from-transparent via-border to-transparent mb-10" />
+          
+          <h3 className="text-2xl font-display font-bold text-foreground mb-3">
+            Mettiti alla prova! 🎮
+          </h3>
+          <p className="text-muted-foreground mb-8 max-w-md mx-auto font-medium">
+            Pensi di aver capito tutto? Gioca al nostro minigioco e dimostra le tue abilità.
           </p>
+          
           <Link href="/gioca">
             <motion.button
-              whileHover={{ scale: 1.04, y: -2 }}
-              whileTap={{ scale: 0.97 }}
-              className="group relative inline-flex items-center justify-center gap-3 px-10 py-5 bg-primary text-primary-foreground rounded-2xl font-display font-bold text-2xl overflow-hidden shadow-xl shadow-primary/25 transition-shadow hover:shadow-2xl hover:shadow-primary/40"
+              whileHover={{ y: -2, scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-primary text-primary-foreground rounded-2xl font-display font-bold text-xl overflow-hidden shadow-xl shadow-primary/25 transition-all hover:shadow-2xl hover:shadow-primary/40"
             >
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
-              <Sparkles className="w-6 h-6 relative z-10" />
-              <span className="relative z-10">Proviamo a riciclare!</span>
-              <Gamepad2 className="w-7 h-7 relative z-10" />
+              <Gamepad2 className="w-6 h-6 relative z-10" />
+              <span className="relative z-10">Inizia il Gioco</span>
+              <ArrowRight className="w-6 h-6 relative z-10 group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </Link>
         </motion.div>
