@@ -19,7 +19,7 @@ export const bannedWords = [
   "scorreggiare", "sega", "seghe", "slinguare", "slinguata", "smandrappata", "soccia", "socmel", "sorca",
   "spagnola", "spompinare", "sticchio", "stronza", "stronzata", "stronzo", "succhiami", "succhione",
   "sveltina", "sverginare", "tarzanello", "terrone", "tette", "topa", "troia", "troie", "trombare", "vacca",
-  "vaffanculo", "fanculo", "fottiti", "vangare", "zinne", "zoccola", "zoccole", "trump", "biden", "putin", "kushner", "netanyahu", "musk",
+  "vaffanculo", "fanculo", "fottiti", "vangare", "zinne", "zoccola", "zoccole", "trump", "biden", "putin", "kushner", "netanyahu", "musk","Charlie kirk","roman","*"
 
   // Bestemmie e offese aggiuntive
   "porcodio", "dioporco", "porcamadonna", "madonnaputtana", "diocane", "canedio", "diomaiale", "mannaggia", "mortacci",
