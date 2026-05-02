@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Shadow -->
+  <ellipse cx="100" cy="183" rx="50" ry="8" fill="#00000020"/>
+  <!-- Tape roll outer -->
+  <circle cx="100" cy="100" r="68" fill="#FCD34D"/>
+  <!-- Tape roll inner (hole) -->
+  <circle cx="100" cy="100" r="35" fill="#FEF3C7"/>
+  <!-- Tape roll core -->
+  <circle cx="100" cy="100" r="28" fill="#F59E0B"/>
+  <circle cx="100" cy="100" r="20" fill="#FBBF24"/>
+  <!-- Core hole -->
+  <circle cx="100" cy="100" r="14" fill="#FEF9C3"/>
+  <!-- Tape transparency effect (ring) -->
+  <circle cx="100" cy="100" r="68" fill="none" stroke="#F59E0B" stroke-width="5" opacity="0.5"/>
+  <circle cx="100" cy="100" r="58" fill="none" stroke="#FDE68A" stroke-width="3" opacity="0.4"/>
+  <circle cx="100" cy="100" r="48" fill="none" stroke="#FCD34D" stroke-width="2" opacity="0.3"/>
+  <!-- Sticky tab -->
+  <path d="M162,80 Q175,75 178,90 Q182,105 168,112 L150,95 Z" fill="#FCD34D" stroke="#F59E0B" stroke-width="1"/>
+  <path d="M162,80 L150,95" stroke="#F59E0B" stroke-width="1.5" fill="none"/>
+  <!-- Tab texture lines -->
+  <line x1="163" y1="83" x2="170" y2="100" stroke="#F59E0B" stroke-width="1" opacity="0.5"/>
+  <line x1="167" y1="82" x2="174" y2="98" stroke="#F59E0B" stroke-width="1" opacity="0.5"/>
+  <!-- Shine on tape roll -->
+  <ellipse cx="80" cy="72" rx="16" ry="8" fill="white" opacity="0.3" transform="rotate(-30,80,72)"/>
+  <ellipse cx="75" cy="68" rx="6" ry="3" fill="white" opacity="0.4" transform="rotate(-30,75,68)"/>
+</svg>

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Shadow -->
+  <ellipse cx="100" cy="187" rx="45" ry="7" fill="#00000020"/>
+  <!-- Metal lid -->
+  <rect x="60" y="38" width="80" height="22" rx="5" fill="#9CA3AF"/>
+  <rect x="63" y="42" width="74" height="14" rx="3" fill="#D1D5DB"/>
+  <!-- Lid rim -->
+  <rect x="58" y="56" width="84" height="8" rx="3" fill="#6B7280"/>
+  <!-- Jar glass body -->
+  <path d="M65,64 Q60,70 60,80 L60,162 Q60,172 70,175 L130,175 Q140,172 140,162 L140,80 Q140,70 135,64 Z" fill="#F0FDF4" stroke="#D1FAE5" stroke-width="1.5"/>
+  <!-- Jam fill -->
+  <path d="M62,100 Q60,105 60,162 Q60,172 70,175 L130,175 Q140,172 140,162 L140,100 Q138,96 100,96 Q62,96 62,100 Z" fill="#DC2626" opacity="0.85"/>
+  <!-- Jam surface slight curve -->
+  <ellipse cx="100" cy="100" rx="38" ry="5" fill="#EF4444" opacity="0.9"/>
+  <!-- Glass shine -->
+  <rect x="68" y="70" width="8" height="80" rx="4" fill="white" opacity="0.35"/>
+  <rect x="80" y="65" width="4" height="30" rx="2" fill="white" opacity="0.25"/>
+  <!-- Label -->
+  <rect x="70" y="108" width="60" height="45" rx="4" fill="#FEF2F2"/>
+  <rect x="70" y="108" width="60" height="45" rx="4" fill="none" stroke="#FCA5A5" stroke-width="1.5"/>
+  <!-- Strawberry on label -->
+  <path d="M92,125 Q100,115 108,125 Q112,135 100,143 Q88,135 92,125Z" fill="#EF4444"/>
+  <path d="M100,115 L100,112" stroke="#16A34A" stroke-width="2" stroke-linecap="round"/>
+  <path d="M100,112 Q95,108 92,110" stroke="#16A34A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Seeds on strawberry -->
+  <ellipse cx="97" cy="128" rx="1" ry="1.5" fill="#FEF2F2" transform="rotate(-10,97,128)"/>
+  <ellipse cx="103" cy="128" rx="1" ry="1.5" fill="#FEF2F2" transform="rotate(10,103,128)"/>
+  <ellipse cx="100" cy="135" rx="1" ry="1.5" fill="#FEF2F2"/>
+</svg>
