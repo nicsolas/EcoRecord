@@ -11,6 +11,8 @@ import GameStart from "@/pages/GameStart";
 import Game from "@/pages/Game";
 import Results from "@/pages/Results";
 import Leaderboard from "@/pages/Leaderboard";
+import Scan from "@/pages/Scan";
+import Trainer from "@/pages/Trainer";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -30,6 +32,8 @@ function Router() {
         <Route path="/play" component={Game} />
         <Route path="/results" component={Results} />
         <Route path="/leaderboard" component={Leaderboard} />
+        <Route path="/scan" component={Scan} />
+        <Route path="/trainer" component={Trainer} />
         <Route component={NotFound} />
       </Switch>
     </Layout>

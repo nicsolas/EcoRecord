@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Gamepad2, Recycle, ArrowRight, X, Leaf, Wine, FileText, Package, Trash2, Cpu } from 'lucide-react';
+import { Gamepad2, Recycle, ArrowRight, X, Leaf, Wine, FileText, Package, Trash2, Cpu, Camera } from 'lucide-react';
 
 interface BinInfo {
   id: string;
@@ -282,18 +282,32 @@ export default function Home() {
             Pensi di aver capito tutto? Gioca al nostro minigioco e dimostra le tue abilità.
           </p>
           
-          <Link href="/gioca">
-            <motion.button
-              whileHover={{ y: -2, scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-primary text-primary-foreground rounded-2xl font-display font-bold text-xl overflow-hidden shadow-xl shadow-primary/25 transition-all hover:shadow-2xl hover:shadow-primary/40"
-            >
-              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
-              <Gamepad2 className="w-6 h-6 relative z-10" />
-              <span className="relative z-10">Inizia il Gioco</span>
-              <ArrowRight className="w-6 h-6 relative z-10 group-hover:translate-x-1 transition-transform" />
-            </motion.button>
-          </Link>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link href="/gioca">
+              <motion.button
+                whileHover={{ y: -2, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-primary text-primary-foreground rounded-2xl font-display font-bold text-xl overflow-hidden shadow-xl shadow-primary/25 transition-all hover:shadow-2xl hover:shadow-primary/40 w-full sm:w-auto"
+              >
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+                <Gamepad2 className="w-6 h-6 relative z-10" />
+                <span className="relative z-10">Inizia il Gioco</span>
+                <ArrowRight className="w-6 h-6 relative z-10 group-hover:translate-x-1 transition-transform" />
+              </motion.button>
+            </Link>
+
+            <Link href="/scan">
+              <motion.button
+                whileHover={{ y: -2, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-secondary text-secondary-foreground border border-border rounded-2xl font-display font-bold text-xl overflow-hidden shadow-lg transition-all hover:shadow-xl hover:border-primary/50 w-full sm:w-auto"
+              >
+                <div className="absolute inset-0 bg-primary/5 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+                <Camera className="w-6 h-6 relative z-10 text-primary" />
+                <span className="relative z-10">Eco-Scanner AI</span>
+              </motion.button>
+            </Link>
+          </div>
         </motion.div>
       </div>
     </div>

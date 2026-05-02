@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
+import basicSsl from '@vitejs/plugin-basic-ssl';
 
 const rawPort = process.env.PORT || "5173";
 const port = Number(rawPort);
@@ -19,6 +20,7 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
+    basicSsl(),
     ...(isReplit
       ? [
           await import("@replit/vite-plugin-runtime-error-modal").then((m) =>

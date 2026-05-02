@@ -1,5 +1,5 @@
 import { Link } from 'wouter';
-import { Leaf, Trophy, Home, Gamepad2 } from 'lucide-react';
+import { Leaf, Trophy, Home, Gamepad2, Camera } from 'lucide-react';
 
 export function Header() {
   return (
@@ -17,6 +17,9 @@ export function Header() {
         <nav className="flex items-center gap-2">
           <Link href="/" className="p-2 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-full transition-colors" title="Home">
             <Home className="w-5 h-5" />
+          </Link>
+          <Link href="/scan" className="p-2 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-full transition-colors" title="Scanner AI">
+            <Camera className="w-5 h-5" />
           </Link>
           <Link href="/gioca" className="p-2 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-full transition-colors" title="Gioca">
             <Gamepad2 className="w-5 h-5" />
