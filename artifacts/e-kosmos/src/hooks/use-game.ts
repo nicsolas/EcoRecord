@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 import { shuffleAllItems, TrashItem, CategoryId } from '@/lib/trash-data';
 import { useLocation } from 'wouter';
 
-const TOTAL_SECONDS = 30;
+const TOTAL_SECONDS = 60;
 
 export interface GameResult {
   score: number;

@@ -120,7 +120,7 @@ export default function Results() {
             {score} pt
           </div>
           <div className="text-sm font-semibold text-muted-foreground mb-2">
-            Precisione: {accuracy}% · {total} oggetti in 30 secondi
+            Precisione: {accuracy}% · {total} oggetti in 60 secondi
           </div>
           <p className="font-semibold text-foreground/80 text-sm">{getMessage()}</p>
         </div>

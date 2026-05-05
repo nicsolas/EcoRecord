@@ -55,7 +55,7 @@ export default function GameStart() {
               Diventa il <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-600 relative inline-block">Campione</span> del Riciclo!
             </h1>
             <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
-              Hai <strong>30 secondi</strong> per smistare più oggetti possibili tra i 120 disponibili. Più ne smisti correttamente, più punti guadagni!
+              Hai <strong>60 secondi</strong> per smistare più oggetti possibili tra i 120 disponibili. Più ne smisti correttamente, più punti guadagni!
             </p>
           </div>
 
