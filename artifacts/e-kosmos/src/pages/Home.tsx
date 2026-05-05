@@ -278,8 +278,8 @@ export default function Home() {
           <h3 className="text-2xl font-display font-bold text-foreground mb-3">
             Gioca o Scansiona! 🎮📸
           </h3>
-          <p className="text-muted-foreground mb-8 max-w-lg mx-auto font-medium text-balance">
-            Mettiti alla prova con il nostro minigioco, oppure usa il nuovo <strong className="text-primary">Eco-Scanner AI</strong> per farti aiutare dall'intelligenza artificiale a riconoscere i rifiuti all'istante!
+          <p className="text-muted-foreground mb-8 max-lg mx-auto font-medium text-balance text-lg">
+            Mettiti alla prova con il nostro minigioco, oppure usa il nostro <strong className="text-primary">Eco-Scanner AI</strong> per farti aiutare dall'intelligenza artificiale a riconoscere i rifiuti all'istante!
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -305,7 +305,6 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-primary/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
                 <Camera className="w-6 h-6 relative z-10 text-primary" />
                 <span className="relative z-10">Eco-Scanner AI</span>
-                <div className="absolute top-0 right-0 px-2.5 py-1 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wider rounded-bl-xl shadow-sm z-20">Nuovo</div>
               </motion.button>
             </Link>
           </div>
