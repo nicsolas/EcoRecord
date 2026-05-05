@@ -77,6 +77,7 @@ export default function Home() {
   return (
     <div className="flex-1 flex flex-col items-center p-4 md:p-8 min-h-full">
       <div className="w-full max-w-5xl mx-auto">
+        <h1 className="sr-only">E-kosmos</h1>
 
         {/* Hero */}
         <motion.div
