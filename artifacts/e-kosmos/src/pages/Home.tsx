@@ -276,10 +276,10 @@ export default function Home() {
           <div className="h-px w-full max-w-md mx-auto bg-gradient-to-r from-transparent via-border to-transparent mb-10" />
           
           <h3 className="text-2xl font-display font-bold text-foreground mb-3">
-            Mettiti alla prova! 🎮
+            Gioca o Scansiona! 🎮📸
           </h3>
-          <p className="text-muted-foreground mb-8 max-w-md mx-auto font-medium">
-            Pensi di aver capito tutto? Gioca al nostro minigioco e dimostra le tue abilità.
+          <p className="text-muted-foreground mb-8 max-w-lg mx-auto font-medium text-balance">
+            Mettiti alla prova con il nostro minigioco, oppure usa il nuovo <strong className="text-primary">Eco-Scanner AI</strong> per farti aiutare dall'intelligenza artificiale a riconoscere i rifiuti all'istante!
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -300,11 +300,12 @@ export default function Home() {
               <motion.button
                 whileHover={{ y: -2, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-secondary text-secondary-foreground border border-border rounded-2xl font-display font-bold text-xl overflow-hidden shadow-lg transition-all hover:shadow-xl hover:border-primary/50 w-full sm:w-auto"
+                className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-background text-foreground border-2 border-primary/30 rounded-2xl font-display font-bold text-xl overflow-hidden shadow-lg shadow-primary/10 transition-all hover:shadow-xl hover:shadow-primary/20 hover:border-primary/60 w-full sm:w-auto"
               >
-                <div className="absolute inset-0 bg-primary/5 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-primary/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
                 <Camera className="w-6 h-6 relative z-10 text-primary" />
                 <span className="relative z-10">Eco-Scanner AI</span>
+                <div className="absolute top-0 right-0 px-2.5 py-1 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wider rounded-bl-xl shadow-sm z-20">Nuovo</div>
               </motion.button>
             </Link>
           </div>
