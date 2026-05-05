@@ -300,10 +300,10 @@ export default function Home() {
               <motion.button
                 whileHover={{ y: -2, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-background text-foreground border-2 border-primary/30 rounded-2xl font-display font-bold text-xl overflow-hidden shadow-lg shadow-primary/10 transition-all hover:shadow-xl hover:shadow-primary/20 hover:border-primary/60 w-full sm:w-auto"
+                className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-secondary text-secondary-foreground rounded-2xl font-display font-bold text-xl overflow-hidden shadow-xl shadow-secondary/25 transition-all hover:shadow-2xl hover:shadow-secondary/40 w-full sm:w-auto"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-primary/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
-                <Camera className="w-6 h-6 relative z-10 text-primary" />
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+                <Camera className="w-6 h-6 relative z-10" />
                 <span className="relative z-10">Eco-Scanner AI</span>
               </motion.button>
             </Link>
